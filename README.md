@@ -6,4 +6,7 @@ analysis. The class uses
 [Algorithm Design](http://amzn.com/0321295358), which is a book by
 Jon Kleinberg and Éva Tardos.
 
-- [Week 0]()
+Notes are ordered by week number and are [org mode](orgmode.org)
+exported README.md files.
+
+- [Week 0](https://goo.gl/3qZCBA)
