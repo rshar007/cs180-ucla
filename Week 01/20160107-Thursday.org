@@ -1,0 +1,76 @@
+* January 7th, 2015 - Class Notes
+** Introduction
+Homework will be assigned today and if there are any questions
+about the homework, bring them up with the T.A. Furthermore,
+homework will be given back on Fridays.
+
+Mondays, Tuesdays, and ... office hours are available.
+** General approach to algorithms
+** Matching
+*** Simple matching
+Matching is a general problem with a large number of applications.
+
+M W
+x o
+x o
+x o
+
+Same number of men and women. We are interested in a perfect matching.
+This problem requires a perfect matching.
+
+For the first requirements we've given, match each man with one woman,
+drawing a straight line from the left to the right.
+
+Try the easiest solution first.
+*** Ordered matching
+**** The problem itself
+Each person $m_1,m_2,..,m_n$ has a preference for his mate. We assume
+that the same is true of the women.
+
+An unstable solution is one in which there is a preference
+from both sides that are unsatisfied.
+**** Our criteria
+1. Everyone must be matched with someone (perfect matching)
+2. We want a stable matching
+
+If we see an arrow coming from one side into the other, then we have
+an unstable solution
+
+m ----- w
+
+m'----- w'
+
+For the problem as given in class to this point, we have a bipartite
+graph where there are n-men and n-women, who each have a preference
+list which is a permutation of the other side, with each person
+appearing only once on their preference list.
+
+We spent about twenty minutes understanding the problem. The professor
+has emphasized that this is valuable and for interview questions,
+homework problems, or test questions, this should be what we are
+doing.
+**** The algorithm
+Throughout the algorithm given in the book, men will get worse and 
+worse matches, whereas, women will get better and better matches.
+***** proof of no unstable pairs
+We'll use a proof of contradiction. We'll assume for the purposes
+of contradiction that there is a situation which is unstable. Thus
+there exists an m and a w, where both prefers each other to whoever
+they are already matched with.
+
+There are two cases to consider:
+1. /m/ did not propose to /w'/ 
+2. m did propose to /w'/
+
+Let's show the first case produces a contradiction. If /m/ did not
+propose to /w'/ then /m/ proposed to someone else first; however,
+this can't happen in our algorithm because he was supposed to ask
+the person who was highest on his list.
+
+Let's show the second case produces a contradiction. If /m/ did
+propose to /w'/ then /w'/ did not accept his proposal. But according
+to our algorithm, /w'/ did accept his proposal since he was higher
+on her list. Thus, we have a contradiction.
+***** proof that there is a perfect match
+
+
