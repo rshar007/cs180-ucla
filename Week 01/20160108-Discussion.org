@@ -1,0 +1,65 @@
+#+TITLE: January 8th, 2016 - Discussion
+#+AUTHOR: Ryan Sharif
+#+LaTeX_CLASS_OPTIONS: [a4paper,twoside,twocolumn]
+* Introduction
+CS 180
+\noindent Yuan He - yuan.he@ucla.edu
+
+Office hours: 4:00 - 6:00 in T.A. Office
+
+* Homework advice
+** Psuedocode
+Use general English like pseudocode. Focus on the idea of the algorithm. 
+
+** Standard algorithms
+For sorting algorithms, you don't need to write the actual code. Still,
+write down the algorithm you used, such as /merge sort/, and specify
+its writing time: $O (n \ log \ n)$
+
+* Big-O Notation
+** Time complexity
+The time complexity of an algorithm depends on several factors:
+- input size
+- steps
+- time of one single step
+
+Intuitively, as an input size grows, the longer an algorithm should
+take to complete. Typically, we'll use $n$ to denote the size of the
+input and $x$ to denote the input itself, e.g., $n = |x|$
+
+We also need to consider how the number of steps change as the input
+size changes. We'll use $T(n)$ to represent time complexity.
+Furthermore, for this class, we'll consider worst case complexity,
+i.e., the largest possible running time for an algorithm to complete.
+Thus, we'll use $O(...)$ notation to denote this asymptotic upperbound
+on runtime.
+** Upperbound
+Suppose we have a function $f$ and a function $g$. We say,
+$f = O(g)$ if there exists a $c$ such that $f(n) \leq c \times g(n)$
+for a sufficiently large $n$, where $n > n_0$.
+** Lowerbound
+We can define a lowerbound for our algorithms using omega notation:
+$f = \Omega(g)$, $g = O(f)$, such that $f = O(g)$ and $f = \Omega(g)$,
+thus $f = \Theta(g)$
+** Polynomial time
+An algorithm runs in polynomial time if and only if it runs in a time
+$O(n)^k$ for some constant $k$.
+** Exponential time
+We also have algorithms that run in exponential time, where $O(r^n)$,
+where $r$ is some constant, growing much more rapidly when compared
+to polynomial time algorithms.
+** Example run times
+1. $T(n) = 100n^2 + 24n + 2 \ , f(n) = n^2$
+   1. This algorithm runs in $Of(n)$
+   2. $\Omega(f(n))$
+   3. $\Theta(f(n)$
+2. $T(n) = n^2 \ , f(n) = n \log n$
+   1. $T(n) = (f(n)$
+   2. $T(n) = \Omega(f(n))$
+** Decide whether it $\Theta(n), O(n), \Omega(n)$
+1. $T(n) = \log n$
+   1. $O(n)$
+   2. It is not $\Omega(n)$
+2. $T(b) = n + \sqrt{n}$
+   1. Since $\sqrt{n} - n$ for some sufficiently large input is less 
+	than zero, then $O(n)$ and $\Omega(n)$, thus $\Theta(n)$
