@@ -1,0 +1,263 @@
+#+AUTHOR: Ryan Sharif
+#+TITLE: CS180: Homework 01
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LATEX_HEADER: \usepackage[makeroom]{cancel}
+
+#+OPTIONS: toc:nil
+
+* Exercise 3, page 22
+There are no  stable pairs of schedules. To see  why lets consider two
+small  sets:  $\mathcal{A}  =  \left\{2,3,4\right\}$,  $\mathcal{B}  =
+\left\{2.7,3.3,5 \right\}$. We want to  show that no matter what order
+$\mathcal{B}$  schedules their  program  lineup, there  is  a way  for
+$\mathcal{A}$ to increase the number of slots that they win.
+
+First, lets consider  the program lineup, where  $\mathcal{A}$ has its
+programs ordered in  ascending rating order, i.e., $s_1 =  2, s_2 = 3,
+s_3 = 4$, where $s_n$ is  the slot that a program occupies. Similarly,
+suppose  $\mathcal{B}$ has  its  programs in  ascending rating  order,
+i.e., $s_1 =  2.7, s_2 = 3.3,  s_3 = 5$. Then,  $\mathcal{B}$ wins all
+slots, since $2 \leq 2.7, 3 \leq 3.3, and 4 \leq 5$.
+
+But all  $\mathcal{A}$ must  do is  reorder their  programming lineup,
+unilateraly such  that $s_1 = 4$,  $s_2 = 3,  s_3 = 2$. In  this case,
+$\mathcal{A}$ loses one slot but  wins two.  Thus, since $\mathcal{B}$
+can  unilateraly  reorder their  programming  lineup  such that  their
+programs match  up to our first  configuration, and since there  is no
+prohibition on changing a lineup  afterwards, their is no stable pairs
+of schedules.
+
+* Exercise 5, page 24
+** (a) Strong instability
+There is an algorithm that guarantees a perfect matching with no
+instability, and we'll use the algorithm that was given earlier in
+the chapter:\\
+
+#+BEGIN_LaTeX
+{\fontfamily{pcr}\selectfont 
+Initially, all $m \in M$ and all $w \in W$ are free\\
+While there is a man $m$ who is free and hasn't proposed to every
+woman\\
+\-\hspace{2cm} choose such a man \\
+\-\hspace{2cm} let $w$ be the highest ranked woman to whom $m$ has not proposed \\
+\-\hspace{2cm} if $w$ is free, then \\
+\-\hspace{4cm}($m,w$) become engaged. \\
+\-\hspace{2cm} else, $w$ is currently engaged to $m'$\\
+\-\hspace{4cm} if $w$ prefers $m'$ to $m$, then \\
+\-\hspace{6cm} $m$ remains free \\
+\-\hspace{4cm} else, $w$ prefers $m$ to $m'$ \\
+\-\hspace{6cm} ($m,w$) become engaged \\
+\-\hspace{6cm} $m'$ becomes free \\
+\-\hspace{4cm} Endif \\
+\-\hspace{2cm} Endif
+}
+#+END_LaTeX
+
+
+\begin{proof}
+There always exists a perfect matching. \\
+
+Lets assume for the purpose of contradiction that there exists an $m$,
+such that he has proposed to every woman on his list and remains free.
+Then, since we have $n$ men, and $n$ women, there exists a $w \in W$
+such that she is free. Since $m$ proposed to every woman on his list,
+$w$ rejected $m$ because she was engaged to a man higher on her list
+but we just said $w$ was free, which is a contradiction.
+\end{proof}
+
+\begin{proof}
+There is no strong instability. \\
+
+Suppose for the purpose of contradiction that there exists a strong
+instability. In other words, there is a pair ($m,w$) and a pair
+($m',w'$) where either $m$ prefers $w'$ or $w$ prefers $m'$. Lets
+consider each case:
+
+\begin{enumerate}
+\item $m$ prefers $w'$:
+	since $w'$ is preferred by $m$, $w'$ must be higher on $m$'s
+	list, which means $m$ did not propose to $w'$. But according
+	to our algorithm, since $w'$ is higher on $m$'s list, $m$
+	proposed to $w'$ but was rejected, thus we have a
+	contradiction, since we cannot have the case where $m$
+	proposed and did not propose to $w'$.
+\item $w$ prefers $m'$:
+	if $w$ prefers $m'$ to $m$, then it must be the case that $m'$
+	also prefers $w$ to who he is paired with. So, either $m'$
+	proposed to $w$ or $m'$ did not propose to $w$. If he did,
+	then $w$ rejected $m'$ in favor of $m$, contradicting our
+	assumption that $m'$ is higher on her list. If $m'$ did not
+	propose to $w$, then $m'$ proposed to a woman higher on his
+	list, which contradicts our assumption.
+\end{enumerate}
+\end{proof}
+
+** (b) Weak instability
+
+In order to show that there is no algorithm that finds a perfect
+matching with no weak instabilities, we need to give an example where
+all perfect matchings have a weak instability. Consider the case,
+where $n = 2$; thus, we will consider a case where there exists
+$m, m', w, w'$. Since $n = 2$, there are two possible perfect
+matchings:
+\begin{enumerate}
+\item $c_1$: $m$ is paired with $w$ and \\
+	$m'$ is paired with $w'$
+\item $c_2$: $m$ is paired with $w'$ and \\
+	$m'$ is paired with $w$.
+\end{enumerate}
+
+We want to show that there is a weak instability for both these 
+matchings, given a preference list. Let $m$ be indifferent to $w$ and 
+$w'$, $m'$ prefer $w$ to $w'$, $w$ prefer $m$ to $m'$ and $w'$ prefer
+$m$ to $m'$. Both perfect matchings contain weak instability, since
+$m$ is indifferent to $w$ and $w'$ and if he is paired with $w$, then
+$w'$ would have preferred to be matched with him, and similarly, if
+$m$ is matched to $w'$, $w$ would have preferred to be matched $m$.
+Thus, no matter what algorithm you come up with to produce a perfect
+matching, it will invariably contain a weak instability.
+
+* Exercise 2, page 67
+Before answering the questions, lets figure out how many operations
+we can perform in one hour. Since our computer can perform $10^10$
+operations per second, we can multiply that number by 60, since there
+are 60 seconds in a minute, and multiply that number by 60 once more,
+since there are 60 minutes in one hour. Thus, we can perform a total
+of $10^10 \times 60 \times 60 = \mathbf{3.6 \times 10^{13}}$ 
+operations in one hour.
+
+\begin{enumerate}
+\item[(a)]
+	\begin{equation}\label{eq1}
+	\begin{split}
+	3.6 \times 10^{13} & = n^2 \\
+	\sqrt{3.6 \times 10^{13}} & = \sqrt{n^2} \\
+	n & \leq 6 \times 10^6\end{split}
+	\end{equation}
+\item[(b)]
+	\begin{equation}\label{eq2}
+	\begin{split}
+	3.6 \times 10^{13} & = n^3 \\
+	\sqrt[3]{3.6 \times 10^{13}} & = \sqrt[3]{n^3} \\
+	n & \leq 3.3019 \times 10^4\end{split}
+	\end{equation}
+\item[(c)]
+	\begin{equation}\label{eq2}
+	  \begin{split}
+	  3.6 \times 10^{13} &= 100n^2 \\
+	  \frac{3.6 \times 10^{13}}{100} &= 
+	    \frac{\cancel{100} n^2}{\cancel{100}} \\
+	  n & \leq 6 \times 10^5
+	  \end{split}
+	\end{equation}
+\item[(d)]
+	\begin{equation}\label{eq2}
+	  \begin{split}
+	    3.6 \times 10^{13} &= n \log n \\
+	    e^{3.6 \times 10^{13}} &= e^{n \log n} \\
+	    e^{3.6 \times 10^{13}} &= (e^{ \log n})^n \\
+	    e^{3.6 \times 10^{13}} &= e^c \\
+	    \log e^{3.6 \times 10^{13}} &= \log e^c \\
+	    n & \leq 1,290,951,819,848
+	  \end{split}
+	\end{equation}
+\item[(e)]
+	\begin{equation}\label{eq2}
+	  \begin{split}
+	    3.6 \times 10^{13} &= 2^n \\
+	    \log_2 3.6 \times 10^{13} &= \log_2 2^n \\
+	    &= 45 \\
+	    n & \leq 45
+	  \end{split}
+	\end{equation}
+\item[(f)]
+	\begin{equation}\label{eq2}
+	  \begin{split}
+	    3.6 \times 10^{13} &= 2^{2^{n}} \\
+	    \log_2 ( \log_2 3.6 \times 10^{13}) &= n \\
+	    n & \leq 5
+	  \end{split}
+	\end{equation}
+\end{enumerate}
+* Exercise 6, page 68
+** (a) Upper bound on $f$
+When considering the runtime of this algorithm we need to figure out
+how long each row of our two-dimensional array b will take, and then
+multiply that number by $n$, since we have $n$ rows and columns. Lets
+consider how many sums we will have to computer for small $n$'s:
+\begin{enumerate}
+\item[] if $n = 1$, then we will need to perform 1 summation
+\item[] if $n = 2$, then we will need to perform 3 summations
+\item[] if $n = 3$, then we will need to perform 6 summations
+\item[] if $n = 4$, then we will need to perform 10 summations
+\end{enumerate}
+We could continue this exercise; however, it is clear that we have
+a list of /triangle numbers/, where we can use the equation
+$\frac{n(n + 1)}{2}$ to calculate how many summations any given
+row will need. Since we know that we will need to multiply this
+number by $n$, since there are $n$ rows in array /B/, we have a
+function $f = \frac{n^2 (n + 1)}{2}$. Lets recall what it means to
+give a bound of the form $O(f(n))$. We say that a function $f(n)$, is
+$O(g(n))$ if there exists a positive constant $c$ and a sufficienlty
+large $n$, such that $0 \leq f(n) \leq c \cdot g(n)$ for all 
+$n \geq n_0$. Therefore, let $c \geq 1$. Thus $f(n) \in O(n^3)$.
+** (b) Lower bound on $f$
+Given the function we defined in the last section above, we want to
+show that its lower bound is also $\Omega(n^3)$. Lets recall what it
+means for a function $f(n) \in \Omega(.)$ We say that a function
+$f(n) \in \Omega(g(n))$ if and only if there exists a constant $c,
+n_0 > 0$ such that $f(n) \geq c \cdot g(n)$ for all $n \geq n_0$.
+Indeed, our function has such a constant: $0 \leq c \leq 1$. Thus
+$f(n) \in \Omega(n^3)$. Finally, since $f(n) \in O(n^3)$ and since
+$f(n) \in \Omega(n^3)$, $f(n) \in \Theta(n^3)$.  
+** (c) A more efficient algorithm
+The biggest way to improve our algorithm is to replace the step where
+we add up the array entries from $A[i]$ through $A[j]$ for every cell
+$B[i,j]$. Instead, we can simply add the value of $A[i]$ to the value
+we calculated for the last entry, namely $B[(i - 1), j]$. Furthermore,
+since the first entry for every row of $B$ is just $A[i]$, we can
+copy that value to the beginning of our $2 \times 2$ array.
+Intuitively, since we must perform some work in each cell of $B$,
+we have a lower bound of $n \cdot n = n^2$. Lets now look at the
+algorithm:\\
+#+BEGIN_LaTeX
+{\fontfamily{pcr}\selectfont 
+For i = 1, 2, ... n \\
+  \-\hspace{.2cm} For j = i + 1, i + 2, ... n \\
+  \-\hspace{.4cm} If j = 1, then \\
+  \-\hspace{.6cm} copy the contents of A[i] to B[i,j] \\
+\-\hspace{.4cm} Else, \\
+\-\hspace{.6cm} add B[i, (j - 1)] to A[j] \\
+\-\hspace{.6cm} store the result in B[i,j] \\
+\-\hspace{.4cm} Endelse \\
+\-\hspace{.2cm} Endfor \\
+Endfor
+}
+#+END_LaTeX
+
+* Black box
+
+Lets assume that our sequence of real numbers are ordered arbitrarily
+from $x_1$ to $x_n$ in an array data structure, such that
+$A[1] = x_1$, $A[2] = x_2$, etc... We will store the numbers that add
+up to k in a set $S$. \\
+
+#+BEGIN_LaTeX
+{\fontfamily{pcr}\selectfont 
+
+For i = 1, 2, ... n \\
+\-\hspace{.6cm} If the sum of S equals $k$, then we are done \\
+\-\hspace{.6cm} Else provide our algorithmic black box with our array
+\-\hspace{.8cm} without the element A[i], k \\
+\-\hspace{1cm} If our result is false, then add A[i] to S \\
+\-\hspace{.8cm} Endif \\
+\-\hspace{.6cm} Endelse \\
+\-\hspace{.6cm}Endfor \\
+}
+#+END_LaTeX
+
+This algorithm works only if there are no duplicate values in our
+sequence. It has a run time of $O(n)$, since in the worst case
+scenario there is a critical number stored at the end of our array.
+And since each cell is only looked at once, we are guaranteed to never
+look at more than $n$ numbers.
