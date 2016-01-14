@@ -1,0 +1,71 @@
+#+TITLE: Lecture Notes
+#+AUTHOR: Ryan Sharif
+
+* Algorithmic paradigms
+  
+  We don't  want to  come up  with a completely  new solution  for every
+  problem we  encontour. We want to  be able to leverage  solutions from
+  similar and previous problems to new problems.
+  
+* Intervals 
+  Each interval has a starting point and an ending point. By convention,
+  $S_a  \leq E_a$.   Scheduling problems  are very  general problems  in
+  Computer Science, hence we'll  discover several techniques for dealing
+  with these sorts of problems.
+  
+  In  this problem,  we cannot  have overlapping  intervals. We  want an
+  algorithm that maximizes the number of intervals.
+  
+** Greedy vs. exhaustive search
+   A greedy algorithm will pick solutions without considering alternative
+   solutions. In contrast,  an exhaustive search looks  at every possible
+   solution  in  order  to  consider alternative  solutions.  Greedy  and
+   Exhaustive search problems stand in opposition to one another.
+   
+** A binary viewpoint: unacceptable answer
+   We can look at this problem by saying that the solution can be written
+   such  that each  interval represents  a position  in a  binary number,
+   e.g.,  1010111.  Then  there  are $2^n$  possible  solutions  to  this
+   problem. The runtime, thus is exponential; it is not polynomial time.
+** Greedy algorithms
+   We want  to pick  a solution and  not consider  alternative solutions.
+   Lets try a greedy algorithm that  considers the length of the interval
+   preferring  those which  have  the smallest  interval. This  algorithm
+   gives us a legal solution.
+** Plain sweep technique
+   Whenever  a problem  has  a  geometric flavor,  try  that plain  sweep
+   technique,  starting   from  the  beginning  and   responding  to  new
+   information, sweep  the entire span  until you've reached  a solution.
+   This solution, in general, would be  fast; it would be $O(n)$ or close
+   to that.
+   
+*** Ending first algorithm
+    Someone  suggested that  the algorithm  that maximizes  the number  of
+    intervals in our scheduling is the one that selects intervals based on
+    the criteria  that an interval should  be selected if it  ends earlier
+    than any other interval.
+    
+**** Proof
+     Showing a robot how to climb a  step, i.e., induction. We need to show
+     the robot how to  get to the beginning of a  staircase, i.e., the base
+     case, and  how to take a  step, i.e., the inductive  step. Lets assume
+     that our algorithm produces a solution.  Let assume for the purpose of
+     contradiction that there is an optimal solution that gets to step $i$,
+     lets pick  an interval that does  not end first. Since  our algorithms
+     agree up to point $i$, they must agree up to $i + 1$.
+
+**** How does our algorithm run?
+     We want an algorithm that sorts our intervals by end time. Sorting
+     integers take $O(n \log n)$, and we'll take that as a given for now,
+     agreeing to prove this fact in a couple of weeks. Next we choose the
+     first ending interval that does not overlap with previous ones. The
+     professor states that this algorithm takes $O(n \log n)$.
+
+* Summary
+  
+1. Come up with a problem.
+2. Understand the problem.
+3. Come up with an algorithm
+4. Analyze the algorithm
+5. Prove your algorithm
+

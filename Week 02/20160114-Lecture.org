@@ -1,0 +1,87 @@
+#+AUTHOR: Ryan Sharif
+#+TITLE: Lecture 4 Notes
+#+OPTIONS: toc:nil
+#+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
+
+
+* Sorting algorithm: Merge sort (divide and conquer)
+** A set of integers
+Assume you are given a set of integers, 
+$\left\{ 6,2,4,9,1,5,7,3 \right\}$, and you want to sort it 
+in non-decreasing order. One way we can find a good algorithm is to
+solve smaller and smaller problems, until we can solve the problem
+efficiently, putting the answer back together at the end.
+
+** Divide
+Lets partition the problem in half, until we have to sort only one
+number. For this set, we have 8 lists, each of which is already sorted
+for us. Finally, we want to merge these lists.
+
+** Merge
+In general, we can merge lists with the following algorithm: \\
+\begin{enumerate}
+\item[] We assume that the left and right list is already sorted
+\item[] We add the first minimum from A or B
+\item[] Remove that item from A or B (increment the pointer)
+\end{enumerate}
+** Time analysis
+The professor noted that when trying to find out the time analysis
+of this algorithm, we can look at the number of steps we need to
+generate each $y$ in the final list, noting that it is on order
+$O(s + t)$
+
+** Runtime analysis
+
+Since we need to sort two lists and each will take
+$\frac{n}{2}$, and since the merging process will
+take $O(n)$, we have the equation below:
+
+$T(n) = 2 T(\frac{n}{2}) + O(n)$ \\
+Base case: $T(1) = O(1)$
+
+*** Solving
+$T(n) = 2 T(\frac{n}{2}) + O(n)$ rewrite $O(n)$ \\
+$T(n) = 2 T(\frac{n}{2}) + c \cdot n$ rewrite \\
+$T(n) = 2^2 T(\lbrack \frac{n}{4}) + \frac{cn}{2}\rbrack)$ \\
+$T(n) = 2^2 T(\lbrack\frac{n}{2^2}) + 2cn\rbrack)$ \\
+$T(n) = 2^3 T(\lbrack\frac{n}{3}) + 3cn\rbrack)$ \\
+
+Generic step:
+$2^i T (\frac{n}{2^i}) + i cn$
+
+Since we know $T(1)$, we just need to find out:
+$\frac{n}{2^i} = 1$, $2^i$ and solve for $i$,
+$i = \log n$ \\
+
+$2^{\log n} T(\frac{n}{2^{\log n}}) + cn \log n, \\
+n + 1 + cn \log n$ \\
+
+Thus, the runtime is $O(n \log n)$
+
+* Computational geometry: closest pair
+
+** The problem
+How do we find the closest pair where we have points
+distributed arbitrarily on a plain.
+
+** First solution
+Find the distance between each point to every other points,
+which will take $n-1$ units of time, and take the minimal
+updating the closest pair. You repeat this process until
+you have found the minimal pair. How many steps would we
+have to take? $\sum_{i = 1}^{n} i =\nolinebreak \frac{n(n + 1)}{2}$,
+which means that this algorithm is $O(n^2)$.
+* Finding the minimum value of a list
+** Minimum
+If a list is sorted, take the first number. If not, then assign the
+first element of the list as the minimum and then compare that with
+each item in the list, updating the minimum whenever it is found. This
+algorith is $O(n - 1)$.
+** Maximum
+The maximum algorithm is similar to the one above.
+** Minimum and Max
+Compare pairs of numbers in the list, and assign the first pair as the
+min and max. Then compare subsequent pairs, updating min and max
+whenever one is found. This will take about $\frac{n}{2} + n$ steps,
+since we have $\frac{n}{2}$ pairs, and since we need to do $n$
+comparisons.
