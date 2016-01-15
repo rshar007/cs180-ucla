@@ -2,5 +2,67 @@
 #+TITLE: Week 2 Discussion
 #+OPTIONS: toc:nil
 #+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
+#+LATEX_HEADER: \usepackage{listings}
 
-* Some stuff
+* Induction
+** $2^n$ example
+Suppose we have the following sequence:
+
+$2 + 2^2 + 2^3 + ... + 2^n = 2^{n+1} - 2, n \geq 1$
+
+We can show that it works for a base case, such as $1$. Verifying that
+it works for the base case, we go on to the inductive step. We want to
+given any $k$, this formula works for $k + 1$. We can work out this 
+inductive proof on paper.
+
+** Greedy algorithms
+Greedy algorithms make decisions based on a local scope, it does not see
+a global scope. Thus, a greedy algorithm does not look ahead to see if its
+decision could have been better.
+
+*** A sequence of numbers
+Suppose we are given a sequence of numbers: $<1, 3, 2, 5, 6>$. How do we
+sort these numbers? What does a greedy solution look like? One such algorithm
+could look for the minimal value and put that at the front of an array,
+repeating the steps:
+
+| step | sequence  |
+|    0 | 1,3,2,5,6 |
+|    1 | 1,3,2,5,6 |
+|    2 | 1,2,3,5,6 |
+|    3 | 1,2,3,5,6 |
+|    4 | 1,2,3,5,6 |
+
+** Fibbonacci number solution via recursion
+We have the Fibbonacci series: $1 \ 1 \ 2 \ 3 \ 5 \ 8$. How could
+we solve this recursively?
+/if $n \leq 2$, then 1/ ...
+
+** Merge sort
+We worked through the example of merge sort given in Lecture 4.
+Merge takes in two arrays and assumes that each array is already
+sorted. Lets give its psuedocode:
+
+#+BEGIN_LaTeX
+\lstset{basicstyle=\ttfamily}
+\begin{lstlisting}[mathescape,escapeinside='']
+While (Len(lft) and Len(rt) \geq 1)
+  select smallest of lft[1], rt[1]
+  add it to RESULT
+  remove the original side
+Add remaining side to RESULT
+\end{lstlisting}
+#+END_LaTeX
+
+** Power function
+#+BEGIN_LaTeX
+
+\begin{lstlisting}[mathescape,escapeinside='']
+if y = 1, then x
+result = pow(x, y/2)
+if y is EVEN
+  return result * result
+else
+  return x * result * result
+\end{lstlisting}
+#+END_LaTeX
