@@ -1,0 +1,6 @@
+#+AUTHOR: Ryan Sharif
+#+TITLE: Week 2 Discussion
+#+OPTIONS: toc:nil
+#+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
+
+* Some stuff
