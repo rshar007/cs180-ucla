@@ -2,74 +2,94 @@
 #+TITLE: Lecture Notes
 
 * Graphs
-Following the book, we are on chapter 3. A Graph $G = (V, E)$, where
-$V$ is a set of vertices, which are normally labeled, and a set of
+Following the book, we  are on chapter 3. A Graph $G  = (V, E)$, where
+$V$ is  a set of  vertices, which are normally  labeled, and a  set of
 edges, $E$ . Typically, a vertex does not have any weights. Similarly,
-most graphs do not have weights on edges. We assume, normally, that a
+most graphs do not have weights  on edges. We assume, normally, that a
 graph $G$ does not have any parallel edges.
 
 * How to represent a graph
 
 ** Adjacency matrix
-You can represent a graph using a $n \times n$ matrix, which tells us
-if there is an edge from one edge to another. A graph without any arrows 
-is undirected, thus the matrix for an undirected graph is symmetric.
-A graph that is directed, i.e., it has edges with arrows, then the
-matrix entries would not be symmetric.
+You can represent a graph using a  $n \times n$ matrix, which tells us
+if there  is an  edge from one  edge to another.  A graph  without any
+arrows  is undirected,  thus the  matrix  for an  undirected graph  is
+symmetric.  A graph that is directed,  i.e., it has edges with arrows,
+then the matrix entries would not be symmetric.
 
 ** Linked lists
-Another way to represent a graph is to use a linked list. In this model,
-each node has an arrow from one node to another: 1 -> 2 -> 5, thus, this
-shows that 1 is connected to 2 and is connected to 5, making sure to notice
-that the order does not matter.
+Another way  to represent  a graph is  to use a  linked list.  In this
+model, each node has  an arrow from one node to another: 1  -> 2 -> 5,
+thus, this  shows that  1 is  connected to  2 and  is connected  to 5,
+making sure to notice that the order does not matter.
 
 ** Advantages of one over the other
-Matrix representations of graphs grow quickly, since they are a size $n^2$.
-Still, if you want to know if two vertices are connected, we simply look
-at the entry $i,j$ and see if it indicates a 1 or a 0.
+Matrix representations of  graphs grow quickly, since they  are a size
+$n^2$.  Still, if  you want to know if two  vertices are connected, we
+simply look at the entry $i,j$ and see if it indicates a 1 or a 0.
 
 * Paths, cycles, and connections
 Normally, we are interested in simple paths, i.e., neither an edge nor
-a vertex is repeated. 
+a vertex is repeated.
 
-A cycle is a path where the beginning node and the ending node is the 
+A cycle is a path where the  beginning node and the ending node is the
 same vertex.
 
-If you can go from one vertex to every other vertex in the graph, we
+If you can go  from one vertex to every other vertex  in the graph, we
 call the graph /connected/.
 
 * How many edges?
-The maximum number of edges that a simple graph can contain is $(n \choose 2)$
-A dense graph is one which contains about $n^2$ graphs.
+The maximum  number of edges  that a simple  graph can contain  is $(n
+\choose 2)$ A dense graph is one which contains about $n^2$ graphs.
 
-A graph with the minimum number of edges but still being connected is called a
-sparse graph, or a tree.
+A graph with the minimum number  of edges but still being connected is
+called a sparse graph, or a tree.
 
 * Breadth first search (BFS)
-A breadth first search is an algorithm that searches by searching for
+A breadth first search is an  algorithm that searches by searching for
 things by looking in the locations that are closest, moving out as the
 algorithm continues.
 
-Normally, we'll use a data structure that is a FIFO, i.e., first-in-first-out
-data structure.
+Normally,  we'll  use   a  data  structure  that  is   a  FIFO,  i.e.,
+first-in-first-out data structure.
 
 ** Time for BFS
-We look at each vertex and each edge twice. Thus, the algorithm is 
+We look  at each vertex  and each edge  twice. Thus, the  algorithm is
 $O(|E|) + |V|$.
 
 ** BFS Tree
-To find out the shortest distance from some point $\alpha$, you start a
-breadth first search from $\alpha$. Thus, BFS gives us shortest path
-information. This algorithm gives us information in linear in $e$.
-We normally say that an algorithm is linear in terms of the input it receives.
+To find out the shortest distance  from some point $\alpha$, you start
+a breadth first search from $\alpha$. Thus, BFS gives us shortest path
+information. This algorithm gives us information in linear in $e$.  We
+normally say  that an  algorithm is  linear in terms  of the  input it
+receives.
 
 * Depth First Search DFS 
-Depth first search is an algorithm that goes as far as it can without returning
-to a node that was already visited until you hit a wall and have to back track.
+Depth first search is an algorithm that  goes as far as it can without
+returning to a node that was already  visited until you hit a wall and
+have to back track.
 
-The DFS tree is the graph, which allows us to see each edge once. Depth first
-search gives us information about cycles in a graph. An algorithm for checking
-if a graph has any cycles, say to performs a DFS and return true if there are
-any vertices that are visited twice.
+The  DFS  tree  is  the  graph,  which allows  us  to  see  each  edge
+once.  Depth first  search  gives  us information  about  cycles in  a
+graph. An  algorithm for checking  if a graph  has any cycles,  say to
+performs a  DFS and  return true  if there are  any vertices  that are
+visited twice.
 
 This algorithm runs in $O(e + n)$ if there are unconnected components.
+
+* Majority vote
+Suppose  we  have  the  following:  [2,3,2,1,2,3,2,1]  If  we  have  a
+majority, there will  be exactly one.  We need to  count the number of
+votes to see if someone has $\frac{n}{2}$ votes.
+
+One approach to this problem is  sorting the list and seeing if anyone
+has  more  than  $\frac{n}{2}$,  to  see  if  someone  is  a  majority
+candidate. The running time for this algorithm is $O(n + n \log n)$.
+
+When we get a hint, such as /linear/ time is the algorithm we need for
+a problem, is try to remove things  from our list of things we need to
+look at.
+
+Pick two things that are different, remove them from the list until we
+have two items left. Check if they are  the same, if so then we have a
+majority candidate, if not then we don't have a majority candidate.
