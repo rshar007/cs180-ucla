@@ -3,12 +3,36 @@
 #+OPTIONS: toc:nil
 #+LATEX_HEADER: \usepackage{amsthm}
 #+LATEX_HEADER: \usepackage{mathtools}
+#+LATEX_HEADER: \usepackage{tikz}
 
 * Glass jars
 
 * Wires
 
-* Problem 3
+* Tree induction
+A binary tree is a rooted tree in which each node has at most two children.
+Show by induction that in any binary tree the number of nodes with two
+children is exactly one less than the number of leaves.
+
+\begin{proof}
+The number of nodes with two children is exactly on less than the number
+of leaves.
+
+Lets prove this statement by using induction. We'll start with a base case
+of one, where $n = 1$, that is we have a tree with a root node, and a single
+child, then : 
+
+\begin{figure}
+  \centering
+  \begin{tikzpicture}
+    \tikzstyle{every node}=[circle, draw]
+    \node{1}
+      child {node {2}}
+     ;
+   \end{tikzpicture}
+   \caption{$n = 1$}
+\end{figure}
+\end{proof}
 
 * Crossing a rickety bridge
 
