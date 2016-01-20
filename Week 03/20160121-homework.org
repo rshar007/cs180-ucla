@@ -1,0 +1,72 @@
+#+AUTHOR: Ryan Sharif, 204-351-724
+#+TITLE: CS180: Homework 2 | Section 1B
+#+OPTIONS: toc:nil
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LATEX_HEADER: \usepackage{mathtools}
+
+* Glass jars
+
+* Wires
+
+* Problem 3
+
+* Crossing a rickety bridge
+
+* Induction
+
+** The sum of the first $n$ integers is $\frac{n(n+1)}{2}$
+   \begin{proof}
+   The sum of the first $n$ integers is $\frac{n(n+1)}{2}$
+   
+   We will use a proof by induction. First, let us begin with the base case
+   where $n = 1$. We check to see if the statement holds:
+
+   \begin{align*}
+   f(1) &= \frac{1(1+1)}{2} \\
+   &= \frac{2}{2} \\
+   &= 1
+   \end{align*}
+
+   Since, this holds true for our base case, we can make the inductive
+   assumption, that is th  sum of the first $n$ integers
+   is $\frac{n(n+1)}{2}$. Now we show that this holds for $n + 1$:
+
+   \begin{align*}
+   1 + 2 + 3 + ... + n + (n + 1) &= \frac{(n+1)(n+2)}{2} \\
+   \shortintertext{Using our inductive assumption, we know the sum of
+   of the first $n$ numbers}
+   \frac{n(n+1)}{2} + n +1 &= \\
+   \frac{n(n+1)+2(n+1)}{2} &= \\
+   \frac{n(n+1)+2n + 2}{2} &= \\
+   \frac{n^2 + n + 2n + 2}{2} &= \\
+   \frac{n^2 + 3n + 2}{2} &= \\
+   \frac{(n+1)(n+2)}{2} &= \frac{(n+1)(n+2)}{2}
+   \end{align*}
+   Thus, since we have shown that our left hand side is equivalent to
+   the right hand side, we have shown what we wanted to prove.
+   
+   \end{proof}
+
+** Inductive proof 2
+\begin{proof}
+$1\cdot2 + 2\cdot3 + 3\cdot4 + ... +n(n+1) = \frac{n(n+1)(n+2)}{3}$
+
+Let us begin our proof by showing that the base case, where $n = 1$ holds:
+
+\begin{align*}
+f(1) = 1 \cdot 2 &= \frac{1(1+1)(1+2)}{3}\\
+&= \frac{6}{3} \\
+&= 2
+\end{align*}
+
+Since our base case obtains, we can make the inductive assumption and show
+that for any $n$, our statement holds:
+
+\begin{align*}
+  1\cdot2 + 2\cdot3 + 3\cdot4 + ... +n(n+1) + n(n+2) &= \frac{(n+1)(n+2)(n+3)}{3} \\
+  \frac{n(n+1)(n+2)}{3} + (n+1)(n+2) &= \\
+  \frac{n(n+1)(n+2)+3(n+1)(n+2)}{3} &= \\
+  \frac{(n+1)(n+2)(n+3)}{3} &=  \frac{(n+1)(n+2)(n+3)}{3}
+\end{align*}
+
+\end{proof}
