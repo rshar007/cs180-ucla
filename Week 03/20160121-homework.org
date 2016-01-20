@@ -1,4 +1,4 @@
-#+AUTHOR: Ryan Sharif, 204-351-724
+#+AUTHOR: Ryan Sharif: 204-351-724
 #+TITLE: CS180: Homework 2 | Section 1B
 #+OPTIONS: toc:nil
 #+LATEX_HEADER: \usepackage{amsthm}
@@ -11,6 +11,7 @@
 * Problem 3
 
 * Crossing a rickety bridge
+
 
 * Induction
 
