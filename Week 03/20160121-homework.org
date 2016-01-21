@@ -1,3 +1,4 @@
+
 #+AUTHOR: Ryan Sharif: 204-351-724
 #+TITLE: CS180: Homework 2 | Section 1B
 #+OPTIONS: toc:nil
@@ -5,22 +6,96 @@
 #+LATEX_HEADER: \usepackage{mathtools}
 #+LATEX_HEADER: \usepackage{tikz}
 
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{mathpazo}
+#+LaTeX_HEADER: \linespread{1.05}
+#+LaTeX_HEADER: \usepackage[scaled]{helvet}
+#+LaTeX_HEADER: \usepackage{courier}
+#+LATEX_HEADER: \usepackage{listings}
 * Glass jars
 
 * Wires
+There are two things we must do for this problem:
+(i) show that for any specified pattern in which input and output wire meet
+	each other a valid switching of the data streams can always be
+	found, and 
+(ii) give an algorithm for finding such a valid switching
 
+** There is always a valid switching
+\begin{proof}
+a valid switching of the data streams can always be found for any specified
+pattern in which input and output wires meet each other. \\
+
+Let us  assume for the purposes  of contradiction that there  does not
+exist a valid switching of data streams for an arbitrary pattern.
+
+By the definition of the problem, there are $n$ input wires and $n$
+output wires. And we know that each input wire meets each output wire
+at exactly one point, thus for every input wire, there are $n$ points
+for any input stream to be switched on. By our assumption, there is at
+least one output wire where two input streams, $I_1$ and $I_2$, are
+switched on, i.e., there are no other output streams available for
+which one of the two input streams to switch on instead.  Thus, $n$
+input streams are switch on $n - 1$ output streams.  But we already
+said that there are $n$ input and $n$ output wires, thus it cannot be
+the case that there isn't an available output wire for $I_1$ or $I_2$
+and there is an available output wire for $I_1$ or $I_2$.
+\end{proof}
+
+** Algorithm for finding a valid switching
+Assume there is a `preference' order for each input wire, where
+preference indicates the descending order from outputs that are
+further downstream.
+
+Initially all input wires, i '$\in$' I, and output wires 
+o '$\in$' O are unconnected.
+
+- While there is an i '$\in$' I that is unconnected and hasn't tried
+  connecting to every o '$\in$' O
+- Choose such an i
+  + Let o be the most upstream outwire from i, to which i has not
+    yet tried to connect
+  + If o is not connected then
+      - (i, o) i and o become connected 
+  + Else o is currently connected to i'
+    - If i' is more upstream to o than i then
+        o remains unconnected
+    - Else i is more upstream to o than i' then
+      + (i, o) become connected
+      + i' becomes unconnected
+    - Endif
+  + Endif
+- Endwhile
+- Return the set of connected pairs
 * Tree induction
 A binary tree is a rooted tree in which each node has at most two children.
 Show by induction that in any binary tree the number of nodes with two
 children is exactly one less than the number of leaves.
 
 \begin{proof}
-The number of nodes with two children is exactly on less than the number
+The number of nodes with two children is exactly one less than the number
 of leaves.
 
 Lets prove this statement by using induction. We'll start with a base case
-of one, where $n = 1$, that is we have a tree with a root node, and a single
-child, then : 
+of one, where $n = 1$, that is we have a tree with a root node, no children,
+then: 
+
+\begin{figure}
+  \centering
+  \begin{tikzpicture}
+    \tikzstyle{every node}=[circle, draw]
+    \node{1};
+   \end{tikzpicture}
+   \caption{$n = 1$}
+\end{figure}
+
+It is trivially true that the number of nodes with two children is exactly
+one less than the number of leaves, since there is only one leaf, there are
+zero node with two children. 
+
+We now consider two cases. If you add a node to the tree, it does not
+change the number of leaves in our tree. Hence, our statement is still
+true.
 
 \begin{figure}
   \centering
@@ -30,8 +105,35 @@ child, then :
       child {node {2}}
      ;
    \end{tikzpicture}
-   \caption{$n = 1$}
+   \caption{$n = 2$}
 \end{figure}
+
+Finally, we consider the case in which we add one more node to our tree,
+which produces a tree with two leaves. Thus, we have one node with two
+leaves, which is what we wanted to show:
+
+\begin{figure}
+  \centering
+  \begin{tikzpicture}
+    \tikzstyle{every node}=[circle, draw]
+    \node{1}
+      child {node {2}}
+      child {node {3}}
+     ;
+   \end{tikzpicture}
+   \caption{$n = 3$}
+\end{figure}
+
+Thus, we can now show that for $n + 1$, our statement holds. We assume that
+the number of nodes with two children is exactly less than the number of
+leaves. Consider a tree $T$, which has $n$ leaves. Using our inductive
+assumption, we know that the number of nodes with two children is exactly
+less than the number of leaves. Suppose $T$ has $k$ leaves. If $k$ is even,
+then since we have a binary tree, we add a tip to a leaf, which does not
+produce another node with two children, thus our statement still obtains.
+If $k$ is odd, then adding another node creates a new node with two children,
+however, since we added a leaf, our statement still obtains. Thus, we have
+shown that which we wanted to prove.
 \end{proof}
 
 * Crossing a rickety bridge
