@@ -12,6 +12,8 @@
 #+LaTeX_HEADER: \usepackage[scaled]{helvet}
 #+LaTeX_HEADER: \usepackage{courier}
 #+LATEX_HEADER: \usepackage{listings}
+#+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
+
 * Glass jars
 
 * Wires
@@ -47,8 +49,8 @@ Assume there is a `preference' order for each input wire, where
 preference indicates the descending order from outputs that are
 further downstream.
 
-Initially all input wires, i '$\in$' I, and output wires 
-o '$\in$' O are unconnected.
+- Initially all input wires, i '$\in$' I, and output wires 
+  o '$\in$' O are unconnected.
 
 - While there is an i '$\in$' I that is unconnected and hasn't tried
   connecting to every o '$\in$' O
@@ -137,7 +139,18 @@ shown that which we wanted to prove.
 \end{proof}
 
 * Crossing a rickety bridge
-
+For simplicity, let us number our travelers: x_1 = 1 min, x_2 = 2 min,
+x_3 = 7 min, x_4 = 10 min. Since, x_3 and x_4 take the longest time to
+cross the  bridge, we  want to  send them  together to  minimize their
+impact on  our crossing time.  Suppose we  want to send  them together
+first. If  we do so,  then they have crossed  the bridge but  have now
+stranded x_1 and  x_2. If we send  them last, then one of  them has to
+cross the bridge  twice, since there is only one  torch. Thus, we send
+x_1 and x_2  across first, for a  time of 2 minutes.  x_1 returns with
+the torch, adding up  to 3 minutes total, so far. We  now send x_3 and
+x_4 together, adding up to 13 minutes total. We now send x_2 back with
+the torch, adding  up to 15 minutes total. Finally,  x_1 and x_2 cross
+together, adding up to a total of 17 minutes.
 
 * Induction
 
@@ -190,10 +203,10 @@ Since our base case obtains, we can make the inductive assumption and show
 that for any $n$, our statement holds:
 
 \begin{align*}
-  1\cdot2 + 2\cdot3 + 3\cdot4 + ... +n(n+1) + n(n+2) &= \frac{(n+1)(n+2)(n+3)}{3} \\
+  1\cdot2 + 2\cdot3 + 3\cdot4 + ... +n(n+1) + n(n+2) &= \\ \frac{(n+1)(n+2)(n+3)}{3} \\
   \frac{n(n+1)(n+2)}{3} + (n+1)(n+2) &= \\
   \frac{n(n+1)(n+2)+3(n+1)(n+2)}{3} &= \\
-  \frac{(n+1)(n+2)(n+3)}{3} &=  \frac{(n+1)(n+2)(n+3)}{3}
+  \frac{(n+1)(n+2)(n+3)}{3} &= \\ \frac{(n+1)(n+2)(n+3)}{3}
 \end{align*}
 
 \end{proof}
