@@ -16,6 +16,24 @@
 
 * Glass jars
 
+** (a) k = 2 jars
+If we stick to a tight definition for /highest safe rung/, that is an exact
+rung from which we can drop a jar and not have it break, then we are
+limited by the number of jars we are given. In this case, if we have two
+jars, we can climb our ladder in multiples of two, dropping the first jar
+until it breaks, i.e., $k$ times. We then go down one rung to see if it 
+breaks, if so then we know that the highest rung was $2k - 2$, otherwise it
+is $2k - 1$. Unfortunately, this algorithm does not grow slower than linearly,
+since $\lim_{n \rightarrow \infty} \frac{f(n)}{n} = \frac{1}{2}$.
+
+If we loosen our definition of what the /highest safe rung/ means, that is
+we don't mind being less precise, we can do a little better. We can try to
+find the highest rung by using an exponential function, say $f(x) = n^x$.
+We check $f(0)$, then $f(1)$, continuing until we find a rung that breaks
+the jar. Once, found we can back track to our last value, and check one
+more rung. With this algorithm, we find that 
+$\lim_{n \rightarrow \infty}\frac{f(n)}{n} = 0$
+
 * Wires
 There are two things we must do for this problem:
 (i) show that for any specified pattern in which input and output wire meet
@@ -69,6 +87,10 @@ further downstream.
   + Endif
 - Endwhile
 - Return the set of connected pairs
+
+If we assume that we have our `preferences' listed in order, the algorithm
+will be $O(n^2)$, like our previous stable matching marriage problem.
+
 * Tree induction
 A binary tree is a rooted tree in which each node has at most two children.
 Show by induction that in any binary tree the number of nodes with two
