@@ -185,7 +185,7 @@ together, adding up to a total of 17 minutes.
 
    \begin{align*}
    f(1) &= \frac{1(1+1)}{2} \\
-   &= \frac{2}{2} \\
+   &= \frac{2}{2} \\ 
    &= 1
    \end{align*}
 
