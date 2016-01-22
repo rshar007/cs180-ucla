@@ -1,0 +1,6 @@
+#+AUTHOR: Ryan Sharif
+#+TITLE: Week 3 Discussion
+#+OPTIONS: toc:nil
+#+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
+#+LATEX_HEADER: \usepackage{listings}
+

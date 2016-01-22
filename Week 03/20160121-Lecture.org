@@ -1,0 +1,119 @@
+#+AUTHOR: Ryan Sharif
+#+TITLE: Directed graphs and bi-partite graphs
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LATEX_HEADER: \usepackage{mathtools}
+#+LATEX_HEADER: \usepackage{tikz}
+
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{mathpazo}
+#+LaTeX_HEADER: \linespread{1.05}
+#+LaTeX_HEADER: \usepackage[scaled]{helvet}
+#+LaTeX_HEADER: \usepackage{courier}
+#+LATEX_HEADER: \usepackage{listings}
+#+LATEX_HEADER: \usetikzlibrary{positioning,calc}
+#+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
+#+OPTIONS: toc:nil
+
+* Directed Graphs
+Last time, we talked about BFS and DFS both will let us know if there
+are more than one components in the graphs.
+
+Directed Graphs, may look like they have cycles but since directed
+graphs only go one way, the graph would need to have a path such that
+you can return to the beginning. The BFS and DFS algorithms that we
+discussed last time are exactly the same.
+
+A graph, which is directed is called a directed graph. If it doesn't
+have a cycle, it is called a /directed acyclic graph/.
+
+
+* Sorting a graph
+We perform a topological sort of a graph based on dependencies. That
+is if $b$ depends on $a$, we would sort $a$ before $b$. Furthermore,
+we define in-degrees and out-degrees of a graphs. An in-degree with a
+degree of 0, is called a /source/. An out-degree with a degree of 0,
+is called a /sink/. In general, a connected graph $G$ could have $n
+-1$ sinks and sources.
+
+In a graph that is not a Directed acyclic graph, sorting does not make
+sense. Thus, if we have even one cycle, topological sort is undefined.
+
+** Algorithm for topological sort
+We can have $n!$ possible sorts. Suppose that you a have a graph that
+has $(n - 1)$ sources and one sink. Then each source can appear before
+any other sort. 
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\tikzstyle{every node}=[circle, draw]
+\node (a) {a};
+\node (b) [below = of a]{b};
+\node (c) [left = of b]{c};
+\node (d) [right = of b]{d};
+
+\draw [->] (a) edge (b);
+\draw [->] (a) edge (c);
+\draw [->] (a) edge (d);
+\end{tikzpicture}
+\end{figure}
+
+Somehow, we need to have an algorithm that generates a list of sources.
+Output a source. Remove (ignore) edges that depend on that source.
+Update source list and then output a source.
+
+** Implementation
+Assume that  we have a graph  with all edges removed.  Each node, will
+have  an  in-degree and  out-degree  of  0.  Add  edges to  the  graph
+arbitrarily, taking  a node's  current out degree  and updating  it by
+one,  also updating  the node  that receives  an edge  and update  its
+in-degree. Since, for each node, we could have $(n - 1)$ units of time
+updating  in-degrees and  out-degrees,  i.e.,  spending $O(n^2)$  time
+performing this  step; however, we  can look  at this step  in another
+way, since  we are only dealing  with edges, we are  working in linear
+time,  then  $O(e)$,  given  that  the graph  is  less  sparse.   This
+suggests, that the latter analysis is  a tighter bound. This is linear
+based on the  _input size_. Our input size  is $|V| + |E| =  S$ and we
+say that our algorithm is linear in $S$.
+
+It will take  us $O(n)$ to generate a list  of sources. Outputting one
+source takes $O(1)$, and since there  are $n$ sources, we have $O(n)$.
+For each of the  source we output, we look at the  other node, it goes
+to an decrement their in-degree. This take  at most $(n - 1)$ units of
+time, thus it  could be $O(n^2)$; however, this  is pessimistic vertex
+senstive analysis,  since we  can look  at the number  of edge  we are
+working  with,  again  we  have  $O(e)$,  which  again  is  a  tighter
+upper-bound.
+
+\begin{figure}
+  \centering
+  \begin{tikzpicture}
+    \tikzstyle{every node}=[circle, draw]
+    \node (a) {a};
+    \node (a-prime) [right = of a]{a'};
+    \node (b) [below left = of a]{b};
+    \node (c) [below = of a-prime] {c};
+    \node (d) [below = of b] {d};
+    \node (e) [below = of c] {e};
+
+    \draw[->] (a) edge (b) edge (c);
+    \draw[->] (b) edge (d) edge (e);
+    \draw[->] (a-prime) edge (c);
+    \draw[->] (c) edge (e);
+  \end{tikzpicture}
+  \caption{graph used in class}
+\end{figure}
+
+
+* From difficult to less difficult
+Directed acyclic graphs sometimes take difficult graphs and makes them
+less difficult.  Such problems are called /NP-complete/ problems.
+Another term for this same subject is /NP-hard/. The /traveling
+sales man/ problem is one such problem.
+
+
+* Bipartite graphs
+A graph is called bipartite if you can take the vertices of the graphs
+and partition it into two groups, such that edges only extend from one
+group to the other. Graphs with odd-cycles disallow bi-partite graphs.
+One way to detect odd cycles is to use BFS. 
