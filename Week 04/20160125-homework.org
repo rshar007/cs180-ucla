@@ -1,0 +1,25 @@
+#+AUTHOR: Ryan Sharif 204-351-724, Section 1B
+#+TITLE: Homework 3: Graphs
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LATEX_HEADER: \usepackage{mathtools}
+#+LATEX_HEADER: \usepackage{tikz}
+
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{verbatim}
+#+LaTeX_HEADER: \usepackage{mathpazo}
+#+LaTeX_HEADER: \linespread{1.05}
+#+LaTeX_HEADER: \usepackage[scaled]{helvet}
+#+LaTeX_HEADER: \usepackage{courier}
+#+LATEX_HEADER: \usepackage{listings}
+#+LATEX_HEADER: \usetikzlibrary{positioning,calc}
+#+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
+#+OPTIONS: toc:nil
+
+* Lepidopderists
+
+Lets see if we can simplify the problem. We know that our friends have
+caught $n$ butterflies. Furthermore, for every pair $i, j$ they have
+rendered a judgement such that we have $m$ judgements for pairs that
+were not declared ambiguous. They would like to declare that their
+judgements are consistent. The problem sounds like a candidate for
+a bipartite graph: 
