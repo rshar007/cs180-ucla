@@ -1,6 +1,112 @@
 #+AUTHOR: Ryan Sharif
 #+TITLE: Week 3 Discussion
-#+OPTIONS: toc:nil
-#+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
-#+LATEX_HEADER: \usepackage{listings}
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LATEX_HEADER: \usepackage{mathtools}
+#+LATEX_HEADER: \usepackage{tikz}
 
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{verbatim}
+#+LaTeX_HEADER: \usepackage{mathpazo}
+#+LaTeX_HEADER: \linespread{1.05}
+#+LaTeX_HEADER: \usepackage[scaled]{helvet}
+#+LaTeX_HEADER: \usepackage{courier}
+#+LATEX_HEADER: \usepackage{listings}
+#+LATEX_HEADER: \usetikzlibrary{positioning,calc}
+#+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
+#+OPTIONS: toc:nil
+
+
+* Introduction
+Reminder that there is a middterm on February 9^{th} and it will be
+held during class.
+
+Office hours are held in BH2432.
+
+* Graphs
+/graph/: a graph $G$ is a pair, a set of vertices and a set of edges.
+
+** Representing a graph through a matrix
+When we setup a matrix denoting a simple graphs's connections we put a
+1 where there is a connection between two nodes and a zero when there
+is none. It is a semetric matrix. \\
+
+\begin{bmatrix}
+0 & 1 & 1 & 1 & 0 \\ 
+1 & 0 & 0 & 0 & 0 \\ 
+1 & 0 & 0 & 1 & 1 \\ 
+\end{bmatrix}
+
+A graph represented by a matrix is $O(V^2)$
+
+** Representing a graph through a list
+We can also represent simple graphs using lists. The advantage of this
+approach is that it doesn't take up to much space to store the
+information.
+
+The space complexity of this structure is $O(V + E)$.
+
+** Connectivity
+There is not guaruantee that every node in the graph is connected to
+any other node.
+
+** Exploring graphs
+*** Depth first search
+Exploring further and further along the graph before returning back to
+where you started. The time complexity of this algorithm is $O(V + E)$.
+A DFS is usually implemented using a /stack/, a last-in-first-out.
+
+- Stack = {A}
+- Vertices = {}
+- While Vertices is not empty
+  + Remove V_0 from stack
+  + If V_0 not in Visited,
+    - search v_0
+    - add v_0 to visited
+    - visit v_0
+  + Add V_0 neighbors to stack
+
+*** Breadth first search
+Breadth first search runs under the idea that you want to search locally
+before extending your search radius. Thus, a problem that requires a
+breadth first search, generally has an assumption that you should explore
+what is closer before extending your search.
+
+A breadth first search uses a queue, i.e., /first-in-first-out/.
+
+*** Example
+How would we detect a cycle in a graph as in figure 1?
+\begin{figure}
+  \centering
+  \begin{tikzpicture}
+    \tikzstyle{every node}=[circle, draw]
+    \node (a) {a};
+    \node (b) [right = of a] {};
+    \node (c) [right = of b] {};
+    \node (d) [right = of c] {};
+    \node (e) [right = of d] {};
+
+    \node (f) [below = of e] {};
+    \node (g) [left = of f] {};
+    \node (h) [left = of g] {};
+
+    \draw[->] (a) edge (b);
+    \draw[->] (b) edge (c);
+    \draw[->] (c) edge (d);
+    \draw[->] (d) edge (e);
+    \draw[->] (e) edge (f);
+    \draw[->] (f) edge (g);
+    \draw[->] (g) edge (h);
+    \draw[->] (h) edge (c);
+  \end{tikzpicture}
+  \caption{graph used in class}
+\end{figure}
+
+Use two runners, one who runs faster than the other, that is
+one runner steps through the graph two nodes at a time, and
+the other steps through the graph one node at a time. If at
+any point the runners are on the same node, then we are in
+a cycle.
+*** Example 2: Tree
+A tree is a directed acyclic graph. We usually explore trees in three ways
+/pre-order/, /in-order/, and /post-order/. Depth first search is a pre-order
+exploration.
