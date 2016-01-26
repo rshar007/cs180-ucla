@@ -42,6 +42,12 @@ we do a minimal tree height analysis, which is $\log n$. Thus we know that
 binary search is $\Omega(\log{n})$.
 
 
+* A circularly sorted list
+We have a list where somewhere in the list, the smallest number can be
+found. It could be the left most, but it could be the right most or 
+anywhere in between. Numbers following the smallest number are sorted
+in non-descreasing order.
+
 * Footnotes
 [fn:1] Look up the inductive proof for showing that the minimum height 
 of a binary tree is $\log n$
