@@ -1,0 +1,48 @@
+
+#+AUTHOR: Ryan Sharif
+#+TITLE: CS180: Lecture 7
+#+OPTIONS: toc:nil
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LATEX_HEADER: \usepackage{mathtools}
+#+LATEX_HEADER: \usepackage{tikz}
+
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{mathpazo}
+#+LaTeX_HEADER: \linespread{1.05}
+#+LaTeX_HEADER: \usepackage[scaled]{helvet}
+#+LaTeX_HEADER: \usepackage{courier}
+#+LATEX_HEADER: \usepackage{listings}
+#+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
+
+* Lower bounds
+** Formal definition of $\Omega(n)$
+$f(n) = \Omega(g(n))$  if there exists $c, n_0$, such  that $f(n) \geq
+c\cdot g(n)$ for $n \geq n_0$. $T(n)$ for sorting is $\Omega(n)$. When
+we use omega notation, we generally  use it for a specific problem. To
+improve a lower bound,  we want to increase it. When  we have an upper
+bound and lower  bound that are asymptotically equal,  we use $\Theta$
+notation. Most lower bounds are trivial.
+
+** Nontrivial lower bounds: proof on lower bound for sorting
+Generally, lowerbound proofs  are ad hoc. For all sorts,  we will do a
+comparison exchange, that is we will  compare two numbers and move the
+smaller or  greater number. Thus, any  lower bound we posit  will take
+this  into  account.  For  every  comparison,  we  have  two  possible
+outcomes,  either $a  > b$  or $a  <  b$. We  can model  this fact  by
+deriving a  decision tree model.  Since we  are looking for  the worst
+case scenario,  we want  the longest  path of  the decision  tree. The
+height of such a tree is $h \geq \log (n!)$ or $T(n) \geq \log(n!)$ or
+$T(n) \geq  n \log  n$. [fn:1]  Thus, we have  shown that  any sorting
+algorithm that performs a comparison  exchange will be $\Omega (n \log
+n)$.
+
+** Binary search
+We use a decision tree to show that the worst case scenario is $n$. Then
+we do a minimal tree height analysis, which is $\log n$. Thus we know that
+binary search is $\Omega(\log{n})$.
+
+
+* Footnotes
+[fn:1] Look up the inductive proof for showing that the minimum height 
+of a binary tree is $\log n$
+
