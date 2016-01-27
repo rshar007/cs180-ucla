@@ -15,11 +15,57 @@
 #+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
 #+OPTIONS: toc:nil
 
-* Lepidopderists
+* TODO Lepidopderists
 
-Lets see if we can simplify the problem. We know that our friends have
-caught $n$ butterflies. Furthermore, for every pair $i, j$ they have
-rendered a judgement such that we have $m$ judgements for pairs that
-were not declared ambiguous. They would like to declare that their
-judgements are consistent. The problem sounds like a candidate for
-a bipartite graph: 
+Lets see if  we can simplify the  problem. We know that our  friends have caught
+$n$  butterflies. Furthermore,  for  every  pair $i,  j$  they  have rendered  a
+judgement such  that we  have $m$  judgements for pairs  that were  not declared
+ambiguous.
+
+Before  we   try  to   solve  the   problem,  let   us  consider   some  minimal
+examples. Suppose  that our friends only  caught two butterflies. Given  that we
+only  want to  consider  cases  when judgements  are  unambiguous,  we have  two
+possible judgements: either $(x_1, x_2)$ belong to the same group or they belong
+to the  different group.
+
+Whatever algorithm we come up with, we  know that a minimal example will need to
+account  for  a pair  that  belongs  to only  one  group.  Introducing a  single
+butterfly, $x_3$, will force us to see  how to write our algorithm.  Assume that
+$x_1, x_2$ have been  judged to be the same species. Then,  either $x_3$ is also
+the same species as $x_1, x_2$, i.e., $(x_1, x_2)$, $(x_1, x_3), (x_2, x_3)$ are
+all pairs  judged the  same, or  $x_3$ is judged  different, i.e.,  $(x_1, x_3),
+(x_2, x_3)$ should be judged as different, if the judgements are consistent.
+Thus, in both cases we will have two judgements that both need to belong to the
+same category.
+
+
+* Hamiltonian path for a Directed acyclic graph algorithm
+#+BEGIN_COMMENT
+Note that one possibility in the first part of the algorithm is that we need to
+find the `deepest' node in our graph to find the node that will act as our
+starting node. It remains to be shown that our algorithm as it stands will find
+the deepest node as it is currently written.
+#+END_COMMENT
+
+The first step in finding a Hamiltonian  path for a directed acyclic graph is to
+find  a source  to start  from.  The  fastest way  to do  so is  to reverse  the
+direction  of every  directed  edge, creating  the graph  $G'$.  Then choose  an
+arbitrary vertex  and follow its path  until you hit  a vertex that has  no more
+directed edges.  This node, $s$, will  be the starting point for our Hamiltonian
+path.
+
+With a starting  node, $s$, we can  begin the business of  finding a Hamiltonian
+path in our graph $G$ by  performing a Depth-First-Search. The algorithm runs as
+follows:
+
+- Note that we have a set of vertices $V$
+- Start at node $s$
+- While there is a directed edge to follow from the current node, follow it
+  and remove the node from $V$
+  + If the current node has multiple directed edges, add the current node to
+    the stack
+  + If we reach a node with no directed edges, we check to see if $V$ is empty
+    - If $V$ is empty, we have visited every vertex and we are done
+    - Else return to the vertex on our stack and remove it from the stack
+  + If our stack is empty, we have exhausted our graph and found no Hamiltonian
+    path
