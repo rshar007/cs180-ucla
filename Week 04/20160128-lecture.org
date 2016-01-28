@@ -1,6 +1,5 @@
-
 #+AUTHOR: Ryan Sharif
-#+TITLE: CS180: Lecture 8
+#+TITLE: CS180: Lecture 8, more greedy algorithms
 #+OPTIONS: toc:nil
 #+LATEX_HEADER: \usepackage{amsthm}
 #+LATEX_HEADER: \usepackage{mathtools}
@@ -38,3 +37,79 @@ argument.  We assume we are on our optimal /i^{th}/ step and assume
 that the next interval shouldn't be scheduled where we scheduled it,
 for purposes of contradiction. /The professor wants us to finish the
 proof ourselves/.
+
+** The shortest path in a weighted graph
+
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\tikzstyle{every node}=[circle, draw]
+\node (s) {s};
+\node (a) [below left of = s] {a};
+\node (b) [below right of = s] {b};
+\node (c) [right of = b] {c};
+\node (d) [below of = c] {d};
+\node (e) [left of = d] {e};
+\node (t) [below left of = e] {t};
+\node (g) [above left of = t] {g};
+
+\draw [-] (s) -- (a) -- (b) -- (c) -- (d) -- (e) -- (t) -- (g);
+\draw [-] (b) -- (e);
+
+\end{tikzpicture}
+\caption{graph given in class}
+\end{figure}
+
+Suppose we have an undirected graph, which is weighted at its edges
+with no negative edges.  We assume that it is connected and that we
+want to find the shortest path between nodes $s$ and $t$. Put another
+way, we want to find the shortest path between all sources and
+sinks. If we are forced to write a greedy algorithm, we can consider
+all edges of $s$.
+
+- /pick a neighbor of $s$ and pick the edge that has the lowest weight/
+
+But a problem with this approach is that there is only one path for
+any graph. We can remedy this by changing the algorithm a little: for
+each edge, consider the node it is connected to and consider its
+edges, asking how far the node is from $t$.
+
+** Dijkstra's algorithm
+
+/Proof of Dijkstra's algorithm/: We assume we have a graph that
+already contains optimal solutions to our problem. The graph
+has vertices which are considered frontier vertices, that is
+they are the furthest vertices we haven't explored beyond. We
+evaluate each vertex and choose the frontier vertex with the
+minimum value, expanding our frontier to include this vertex.
+Repeat until we have reached $t$. 
+
+*** Time complexity of Dijkstra's algorithm
+The generic step of the algorithm is to perform the following
+$n$ times.
+
+- /find the minimum distance to/ $t$ [ $n$ ]
+- /fix its distance/ [ 1 ]
+- /move neighbors of $x$ to frontier/ [$n$ - 1]
+
+Thus, this algorithm is $O(n^2)$
+
+*** Improving the algorithm
+We are overestimating the cost of the moving to neighbors of $x$,
+similar to what we've done before, charge the cost of looking
+at the graph on the edges. Thus, this is really $O(e)$ time. We
+add the concept of a heap for a total of $O(e + n \log{n})$
+* Minimum spanning tree
+** Finding a spanning tree
+Given a weighted graph, as before, a spanning tree is a graph where we
+remove an edge from the graph until we have a tree.  A minimum
+spanning tree must connect all vertices and be a tree. Finding a
+spanning tree, we can perform a /BFS/.
+
+** MST Theorem
+Take the vertices and partition them into two groups, where neither
+group is empty. Look at all the edges that go from the left partition
+to the right partition. Take one edge that has the minimal weight.
+There is an MST with the edge we just took. This is true of any
+partition.
