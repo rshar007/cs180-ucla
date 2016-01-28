@@ -15,8 +15,9 @@
 #+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
 #+OPTIONS: toc:nil
 
-* TODO Lepidopderists
+* Lepidopderists
 
+** Understanding the problem
 Lets see if  we can simplify the  problem. We know that our  friends have caught
 $n$  butterflies. Furthermore,  for  every  pair $i,  j$  they  have rendered  a
 judgement such  that we  have $m$  judgements for pairs  that were  not declared
@@ -38,6 +39,66 @@ all pairs  judged the  same, or  $x_3$ is judged  different, i.e.,  $(x_1, x_3),
 Thus, in both cases we will have two judgements that both need to belong to the
 same category.
 
+Let's model this simple example by creating a graph for the case in which $x_3$
+is different from $x_1, x_2$:
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\tikzstyle{every node}=[circle, draw]
+\node (1) {$x_1$};
+\node (3) [above right = of 1]{$x_3$};
+\node (2) [below right = of 3]{$x_2$};
+
+
+\draw [-] (1) -- (3);
+\draw [-] (2) -- (3);
+
+\end{tikzpicture}
+\caption{A: 1,2; B: 3}
+\end{figure}
+
+We notice that if we model our data correctly, that is, if the judgements are
+consistent, then we can perform a breadth-first-search on our graph for all
+similarities, if $x_1$ and $x_3$ differ then we should be able to reach $x_2$
+by level 2 of a breadth-first-search, since $x_2$ should also differ from
+$x_3$. Let's try one more graph, modeling $x_1, x_2$ as the same, and
+$x_3, x_4$ as the same:
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\tikzstyle{every node}=[circle, draw]
+\node (1) {$x_1$};
+\node (3) [above right = of 1]{$x_3$};
+\node (4) [below right = of 1]{$x_4$};
+\node (2) [above right = of 4]{$x_2$};
+
+\draw [-] (1) -- (3) -- (2);
+\draw [-] (1) -- (4) -- (2);
+
+\end{tikzpicture}
+\caption{A: 1,2; B: 3,4}
+\end{figure}
+
+** Solution
+
+Let's now explore a solution to this problem. In short, we want to setup
+a simple graph based on the data we have from judgements of different
+pairs. That is for each pair in the set /Different/, add a node to
+our graph for any number in the pair that hasn't already been added to
+our graph and connect the numbers in the pair. Then, when we have our
+graph constructed, we perform a breadth-first-search for each pair in
+the set of judgements /Same/. While there are pairs in the set /Same/
+select an arbitrary pair and remove it from the set /Same/. Perform
+a breadth-first-search on an arbitrary number in the pair, and attempt
+to find its partner in the graph within a level 2 search. If it isn't
+found, then our graph is inconsistent. If /Same/ is empty, then our
+graph is consistent and we are done.
+
+The construction of the simple graph runs in $O(m+n)$ time, since we have
+$m$ nodes, and $n$ edges. Similarly, the breath-first-search runs in
+$O(m+n)$
 
 * Hamiltonian path for a Directed acyclic graph algorithm
 #+BEGIN_COMMENT
@@ -69,3 +130,4 @@ follows:
     - Else return to the vertex on our stack and remove it from the stack
   + If our stack is empty, we have exhausted our graph and found no Hamiltonian
     path
+
