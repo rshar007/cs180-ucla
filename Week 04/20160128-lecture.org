@@ -1,0 +1,40 @@
+
+#+AUTHOR: Ryan Sharif
+#+TITLE: CS180: Lecture 8
+#+OPTIONS: toc:nil
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LATEX_HEADER: \usepackage{mathtools}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{mathpazo}
+#+LaTeX_HEADER: \linespread{1.05}
+#+LaTeX_HEADER: \usepackage[scaled]{helvet}
+#+LaTeX_HEADER: \usepackage{courier}
+#+LATEX_HEADER: \usepackage{listings}
+#+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
+
+* Greedy paradigm
+We have talked about the fact that solving a particular problem is not
+the primary goal of this class, identifying and learning paradigms is
+what is most important.  We've looked at greedy algorithms for
+interval scheduling. The algorithm that worked was choosing the
+intervals that end first. Greedy algorithms are generally fast.
+
+** Multiple processor interval scheduling
+In our previous example of the interval scheduling problem, we were
+not allowed to modify the start or end time, and we carry that to this
+problem. We also want to maximize the number of tasks. The change in
+this version is that we can increase the number of processors. We'll
+want to introduce a processor if and only if we do not have a
+processor available to process an interval. Here, the professor
+suggests a greedy algorithm.
+
+- /sort intervals by their start times/
+- /take the next interval and assign it to any processor/
+- /if no processor is available, add a processor and process the interval/
+
+*How to prove it*: This algorithm is based on a give and exchange
+argument.  We assume we are on our optimal /i^{th}/ step and assume
+that the next interval shouldn't be scheduled where we scheduled it,
+for purposes of contradiction. /The professor wants us to finish the
+proof ourselves/.
