@@ -100,6 +100,105 @@ The construction of the simple graph runs in $O(m+n)$ time, since we have
 $m$ nodes, and $n$ edges. Similarly, the breath-first-search runs in
 $O(m+n)$
 
+* Delete a node
+  We want to  show that given an  undirected graph $G = (V,  E)$, which contains
+  two nodes $s$ and  $t$ such that the distance between $s$  and $t$ is strictly
+  greater than $\frac{n}{2}$, that there must exist some node $v$, where $v \neq
+  s$ and  $v \neq  t$, which  if deleted  would destroy  all $s-t$  paths. Let's
+  assume  for the  purpose  of contradiction,  that there  exists  no such  node
+  $v$. Then, if we perform a BFS search, we should have all layers with at least
+  two nodes, since removing  one of them would not destroy  all $s-t$ paths. But
+  we  said  that  distance  between  $s$  and  $t$  was  strictly  greater  than
+  $\frac{n}{2}$, and since we  have a graph $G$ with $n$ nodes,  and since we do
+  not count nodes $s$  and $t$, if each layer had two nodes,  then we would have
+  $2(\frac{n}{2}) = n$ nodes; but that would mean  we have $n + 2$ nodes, and we
+  already  said  that  our  graph  has  $n$  nodes.   Thus  we  have  reached  a
+  contradiction. Hence there must exist a layer between $s$ and $t$ such that it
+  contains a single node.
+
+  As stated in the proof of  this problem, we can employ a breadth-first-search,
+  which runs in time of $O(m + n)$  to find a layer $l$, which contains a single
+  node.
+
+* Vira 
+A  possible  solution  to  this  problem  is  through  the  use  of  a  directed
+graph. Essentially, we want to maintain the notion of time, such that if a virus
+enters a  computer, its effects are  felt downstream not upstream.   At the same
+time,  we want  to  maintain  the bidirectional  connectivity  described in  the
+program.
+
+We can maintain these two principles  and achieve a solution by taking advantage
+of the  order of triples  we are given.  So that we can  follow any node  in our
+directed graph, maintain  an array which will  point to the first  instance of a
+given node $C$. Starting  from the first triple in an  ascending order, for each
+node $C_i$ and each  node $C_j$, create a node $C_i$ with  its timestamp $k$ and
+add   it  to   our  graph,   doing  the   same  for   $C_j$  and   connect  them
+bidirectionally. If it  is the first time  $C_i$ or $C_j$ has been  added to the
+graph, point to them unidirectionally from the  array of list pointers. If it is
+not the first time  $C_i$ or $C_j$ is being created, point  the last instance of
+$C_i$ or $C_j$ to $C_i'$ or $C_j'$ respectively.
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\tikzstyle{every node}=[circle, draw]
+\node (v) {v};
+\node (C1) [right = of v]{$C_1$};
+\node (C2) [right = of C1]{$C_2$};
+\node (C3) [right = of C2]{$C_3$};
+\node (C4) [right = of C3]{$C_4$};
+
+\node (c1_4) [below = of C1] {$C_1, 4$};
+\node (c4_4) [below = of C4] {$C_4, 4$};
+
+\node (c2_8) [below = of c1_4] {$C_2, 8$};
+\node (c4_8) [below = of c4_4] {$C_4, 8$};
+
+\node (c3_8) [below right = of c2_8] {$C_3, 8$};
+
+\node (c4_12) [right = of c3_8] {$C_4, 12$};
+\node (c1_12) [left = of c3_8] {$C_1, 12$};
+
+\draw[->] (v) edge (C1);
+\draw[->] (C1) edge (c1_4);
+\draw[->] (C4) edge (c4_4);
+\draw[->] (C2) edge (c2_8);
+\draw[->] (C3) edge (c3_8);
+
+\draw[->] (c1_4) edge (c4_4);
+\draw[->] (c4_4) edge (c1_4);
+
+\draw[->] (c2_8) edge (c4_8);
+\draw[->] (c4_8) edge (c2_8);
+\draw[->] (c4_8) edge (c3_8);
+\draw[->] (c3_8) edge (c4_8);
+
+\draw[->] (c4_8) edge (c4_12);
+\draw[->] (c4_12) edge (c4_8);
+
+\draw[->] (c4_12) edge [bend left=65] (c1_12);
+\draw[->] (c1_12) edge [bend left=-65] (c4_12);
+
+\draw[->] (c1_4) edge [bend left=-65] (c1_12);
+
+\end{tikzpicture}
+\caption{A directed graph built on the example data}
+\end{figure}
+
+
+Once  done,  we  have  created  a  graph, which  will  allow  us  to  perform  a
+breadth-first-search to determine if a node  $C_b$ could have been infected by a
+computer  $C_a$ at  time $x$.  Performing a  breadth-first-search starting  from
+$C_a$, search  for any  paths that  connect $C_a$ to  $C_b$. Once  completed, we
+check to see if there exists a node  $C_i, y$ such that it is connected to $C_b,
+y'$, if so, and $y \leq y'$, then  $y$ could have been infected by the virus. If
+not then $C_b$ is healthy.
+
+The running time of this algorithm satisfies the requirements outlined in the
+problem. The creation of nodes for our graph runs in $O(m)$ time since we
+create nodes as they were given to us, in order. Performing the breadth-first-search
+requires linear time to our input, the size of the graph. Thus, our running time
+total is $O(m + n)$.
 * Hamiltonian path for a Directed acyclic graph algorithm
 #+BEGIN_COMMENT
 Note that one possibility in the first part of the algorithm is that we need to
@@ -131,3 +230,29 @@ follows:
   + If our stack is empty, we have exhausted our graph and found no Hamiltonian
     path
 
+* Monster game
+** Monster A.I.
+   In any game, including  those where you try to outsmart the  logic gates of a
+   computer  circuit, you  want to  know your  opponent's strategy.  Thus, let's
+   consider some possibilites  that our game monster may  employ, beginning with
+   the simplest strategies and moving to a more intelligent A.I. (i) The monster
+   stays put, (ii) the monster moves back and forth between two nodes, (iii) the
+   monster moves to  spaces adjacent one node, (iv) the  monster moves to spaces
+   adjacent  to any  node, (v)  the monster  moves to  spaces in  your direction
+   because it always smells your binary  scent, (vi) the monster employs a /BFS/
+   strategy, (vii) the monster employs a /DFS/ strategy.
+
+** Our own A.I.
+   Let's  now consider  the best  strategies for  thwarting the  efforts of  our
+   digital miscreant.  If the  computer employs any  of the  simpler strategies,
+   i-iii, and  if we know  that we are  a safe distance  away. We may  choose to
+   create a program that suggests a BFS strategy, since we would like to explore
+   the nodes around us,  given that we are a safe distance  from the monster and
+   do not  fear that  she'll be approaching  us any time  soon; however,  if the
+   simulation is  any fun at  all, and given that  we have seen  smarter baddies
+   since Pacman,  we should assume  that the A.I.  will itself employ  a smarter
+   strategy. If the  monster knows where we  are and moves towards  us for every
+   move she  makes, we should  adopt a  /DFS/ since we  would like to  try novel
+   nodes and keep our distance from her. Finally, if we know that the monster is
+   performing a /BFS/ strategy, we may benefit from performing one too, assuming
+   that our distance is large enough to do so.
