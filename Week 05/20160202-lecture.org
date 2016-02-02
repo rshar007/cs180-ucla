@@ -1,0 +1,100 @@
+
+#+AUTHOR: Ryan Sharif
+#+TITLE: CS180: Lecture 8
+#+OPTIONS: toc:nil
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LATEX_HEADER: \usepackage{mathtools}
+#+LATEX_HEADER: \usepackage{tikz}
+
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{mathpazo}
+#+LaTeX_HEADER: \linespread{1.05}
+#+LaTeX_HEADER: \usepackage[scaled]{helvet}
+#+LaTeX_HEADER: \usepackage{courier}
+#+LATEX_HEADER: \usepackage{listings}
+#+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
+
+* Introduction
+
+* Minimum spanning tree algorithms
+** MST introduction
+Given a weighted graph, edge weighted, we want to find a minimum spanning
+tree. Among all spanning trees, we are looking for the tree which has the
+minimal value. We use the minimum spanning tree partition theorem, where we
+know that we can always partition a graph into two sets, such that there is
+at least one node on the left is connected to one node on the right. We select
+the minimum edge (there is at least one MST with /e-min/ in it.)
+
+** Prim's algorithm
+
+*** The algorithm
+Two partitions left and right, where /L/ has one node /S/ in it, and R
+has the other nodes, ($n - 1$). Any edge that is connected to /S/ is
+initialized to a weight, and any node not connected to /S/ has a
+weight of infinity. And of all these ($n - 1$) values and you select the
+minimum $\alpha$ and move it to the left partition. Now weight all
+neighbors of $\alpha$ and repeat the process ($n - 1$) times. Once you
+are done you have the minimum spanning tree for the graph.
+
+*** Implementation
+
+Update at most $(n - 1)$ vertices for every time that you bring a
+vertex to the left. This analysis says that this will cost us $n^2$
+time. If we adopt the edge perspective that we did last time, we know
+that every time we move a vertex to the left, it will cost us the
+degree of the vertex. Hence, the total run time will be $\sum \text{deg}_i$,
+which is $O(e \log{n})$. Insertion and extraction of an element from a heap
+takes $\log{n}$ time, thus, since we have $e$ number of edges, we arrive at this
+analysis.
+
+** Kruskal
+Look at at all the edges in a graph $G$. There are $e$ edges in the graph and
+you sort them based on their weight. Consider the minimum weight edge in the
+entire graph. You can always say you want to put one edge in the MST. Then
+select the next smallest edge, until you have $(n - 1)$ edges in $G'$. Note
+that this algorithm is not easy to implement.
+
+*** Find and Union
+We are given a set of groups with elements inside each group, $G1$, $G2$, ...
+with elements $a, b, c$... inside. We want to find if two elements belong
+to the same group. We call this operation /FIND/. We may at some point want
+to merge two groups in an operation we will call /UNION/. This problem is
+called the /union-find/ problem. How do we do /union-find/ efficiently?
+
+Take one of the groups that has three elements in it and represent them
+as a rooted tree. We do the same thing for the other groups. We want
+trees that are balanced for doing what we want. For each of these trees,
+the height will be approximately logarithmic with the number of vertices.
+Looking at the height, thus tells us that we have about $h^2$ vertices.
+
+To see if an elements belongs to a group, we just need to follow a vertex
+to its root. If we perform a union, then we can perform the search in
+$O(\log{n_1} + \log{n_2})$. The height of the new structure will always
+be max($h_{l}, h_{r}$), except when the trees have equal height. Thus,
+we guaruntee that these tasks can be performed efficient time: /FIND/:
+$O(\log{n})$, /UNION/: $O(1)$.
+
+*** Relating back to Kruskal's algorithm
+With a graph $G$, we can remove all edges and have a graph $G'$ with no edges.
+We then begin adding edges one at a time, until we starting having pregroups.
+We ask before connecting an edge, whether they are part of the same group. If
+they do, we will have a cycle. Thus, we don't add such edges; however, if they
+won't belong to the same group we'll add the edge. On the last step, we connect
+two groups and have a final group, which cannot have anymore edges added.
+Thus, for each vertex, we'll perform a $FIND$ and possibly a $UNION$, giving
+us an efficient algorithm: $O(e \log{n})$ + the time we needed for sorting,
+$O(e \log{e})$, which means we have $O(e \log{n} + e \log{e})$ or simply
+$e \log {n}$.
+
+* Midterm material
+Everything that we have covered up to today will be on the midterm. Roughly,
+the professor will cover 
+\textsection 1.1,
+\textsection 1.2, 
+\textsection 2.2, 
+\textsection 2.4, 
+\textsection 3, 
+\textsection 4.1, 
+\textsection 4.4, 
+\textsection 4.5
+
