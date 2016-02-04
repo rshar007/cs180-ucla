@@ -49,6 +49,31 @@ We can do this for every house  East of our current position.  Hence, our greedy
 algorithm installs the least number of cell towers possible.
 
 * Triathalon, quickly!
+We begin the solution to this problem by noting that the bottleneck of the
+triathalon is the swim activity, since only one person can swim their
+20 laps at a time. Thus, an optimal solution must be greater than or
+equal to the sum of all the participants swim activity expected completion
+time. Can we approach this limit? A good algorithm would schedule all our
+participants to complete their bike and running activities while they aren't
+swimming so that they are ready to jump in the pool as soon as possible.
+Finally, since a participant cannot swim and complete another task at the
+same time, we want to ensure some sort of order so we aren't waiting on
+anyone.
+
+We can give a good candidate algorithm:
+
+- /Sort all participants by their expected swim time in non-increasing order/,
+  /call this list S/
+- /Send the slowest swimmer in S to swim and remove him from the list/
+- /Send the fastest swimmer in S to perform his other activities/
+- /If the fastest swimmer in S has finished his other activities/,
+  /he waits, so send the fastest swimmer who has not finished his activities/
+- /If the slowest swimmer is done, send him to complete his other activities/
+  /return to step 2/
+
+This algorithm is $O(n \log{n} + n)$ since we must sort our list and must
+look at each participant once.
+ 
 
 * Minimum-bottleneck spanning tree
 ** Every minimum-bottleneck tree
@@ -117,3 +142,28 @@ we need to ensure is that the first stream satisfies our $r$ constraint:
   /otherwise, no valid schedule exists/.
 
 * Maximum regions
+We begin this problem by noting that we will only be performing diagnol slices
+to the plane, so as to maximize the number of pieces we create. Thus, before
+we can find a function that allows us to know how many pieces we have after
+$n$ slices, we consider the first few line additions. With $n = 0$, we have
+a single region, thus $f(0) = 1$. Adding a single diagonal line, adds another
+region, i.e., $f(1) = 2$. If we add another diagonal line, making sure that
+we don't add it to the intersection of the first two lines, we now have a
+total of six regions, or better stated we have $f(3) = 3 + 2 + f(1)$. We
+begin to notice a pattern, $f(n) = n + (n - 1) + f(n - 2)$. Since, we can
+recursively expand $f(n - 2)$, we have $f(n) = 1 + (1 + 2 + 3 ... + n)$.
+We can use the formular for the summation of the first $n$ integers to
+simplify our formula, $f(n) = 1 + \frac{n(n+1)}{2} = \frac{n^2 + n + 2}{2}$.
+
+Finally, we can use simple induction to show that this holds for any $n$.
+We start with the base case where $n = 1$ and $f(1) = 2$ obtains. Then
+we perform our inductive step for $f(n + 1)$:
+
+\begin{equation} \label{induction}
+  \begin{split}
+    f(n + 1) &= \frac{1}{2}((n + 1)^2 + (n+1) + 2) \\
+    &= \frac{n^2 + n + 2}{2} + n + 1 \\
+    &= \frac{n^2 + n + 2 + 2n + 2}{2} \\
+    \frac{1}{2}(n^2 + 3n + 4) &= \frac{n^2 + 3n + 4}{2}
+  \end{split}
+\end{equation}
