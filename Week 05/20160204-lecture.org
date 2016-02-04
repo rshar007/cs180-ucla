@@ -1,0 +1,29 @@
+#+AUTHOR: Ryan Sharif
+#+TITLE: CS180: More greedy stuff
+#+OPTIONS: toc:nil
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LATEX_HEADER: \usepackage{mathtools}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usetikzlibrary{positioning,calc}
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{mathpazo}
+#+LaTeX_HEADER: \linespread{1.05}
+#+LaTeX_HEADER: \usepackage[scaled]{helvet}
+#+LaTeX_HEADER: \usepackage{courier}
+#+LATEX_HEADER: \usepackage{listings}
+#+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
+
+* Another interval scheduling problem
+We are given a set of intervals as before but they all have the same
+start time.  Each task has a deadline.  Partial tasks are not
+allowed. Our goal is that we want to schedule all the tasks and meet
+all the deadlines. We can go past the deadline but we will be
+penalized. The penalty is linear to how late the tasks take to finish.
+No matter how early you finish your tasks before their deadlines,
+their is no benefit for finishing them on time.
+
+There is always a solution with no space between intervals. Proof was
+done by contradiction.
+
+/There is always one in-order solutions in the case where deadlines are
+all unique/. We will prove this by contradiction...
