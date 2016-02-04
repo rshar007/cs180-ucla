@@ -1,0 +1,119 @@
+
+#+AUTHOR: Ryan Sharif 204-351-724
+#+TITLE: CS180: Homework 4, Section 1B
+#+OPTIONS: toc:nil
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LATEX_HEADER: \usepackage{mathtools}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage{tkz-graph}
+#+LATEX_HEADER: \usetikzlibrary{positioning,calc}
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{mathpazo}
+#+LaTeX_HEADER: \linespread{1.05}
+#+LaTeX_HEADER: \usepackage[scaled]{helvet}
+#+LaTeX_HEADER: \usepackage{courier}
+#+LATEX_HEADER: \usepackage{listings}
+#+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
+
+* Don't drop the call
+** Algorithm
+We can write a straightforward algorithm to solve this problem. We
+begin on the Western most-side of the road with no cell phone towers
+installed.
+
+- /Begin on the West side of the road and travel East/
+- /If you encounter a house, install a cell tower four miles east of/
+  /the house/
+  + /ignore the houses up to four miles east of the just-installed/
+  	/cell tower/
+- /Repeat step 2 until we have reached the end of the road/.
+
+This algorithm runs in linear time since we must consider whether a house is
+within range only once. Thus it runs in $O(n)$.
+
+** Proof
+Let us prove that our algorithm uses as few cell towers as possible by comparing
+it with  an optimal  solution. Suppose  that we are  on the  i^{th} step  of our
+algorithm and that up to now our algorithms have produced the same result.
+
+Suppose for the  sake of contradiction that  the next install we  perform is not
+the optimal  place to install  a cell-tower, that  is an optimal  solution would
+have  installed the  next  cell-tower  somewhere else.  Thus,  let  us swap  our
+solutions. Hence, we  travel to the next  house and do not install  a tower four
+miles east.  Since the house must be within four miles of the closest cell-phone
+tower, we must install the tower closer  than four miles. But that means a house
+that might have been four mile further  East will now require another cell tower
+install. Thus, we will need to install at least one more cell tower.
+
+We can do this for every house  East of our current position.  Hence, our greedy
+algorithm installs the least number of cell towers possible.
+
+* Triathalon, quickly!
+
+* Minimum-bottleneck spanning tree
+** Every minimum-bottleneck tree
+Every minimum-bottleneck tree of $G$ is not a minimum spanning tree of $G$. To
+see why, we can consider a simple counter example. Suppose we have a graph $G$
+as seen in [[fig:minimal_example]]. There we see that our minimal spanning tree
+should be the path from /b/ to /a/ and from /a/ to /c/, or the red path. The
+minimum-bottleneck tree, however, would have to be our blue path from vertices
+/a/ to /c/ to /b/. Since we have an example where a minimum-bottleneck spanning
+tree is not a minimum spanning tree of a graph $G$, it is not true that every
+minimum-bottleneck tree of $G$ is a minimum spannning tree of $G$.
+
+#+NAME: fig:minimal_example
+\begin{figure}
+\centering
+\begin{tikzpicture}
+
+\tikzset{CircleNode/.style={circle, draw}}
+\node [CircleNode] (a) {a};
+\node [CircleNode] (b) [below left = of a]{b};
+\node [CircleNode] (c) [below right = of a]{c};
+
+\begin{scope}[every path/.style={-, solid}, every node/.style={sloped, inner sep=1pt}]
+\draw [red, very thick, yshift=1pt] (a) -- (c) -- (b);
+\draw [blue, very thick,yshift=-1pt] (a) -- node [anchor=north] {$1$} (b) -- (c);
+\draw (a) -- node [anchor=north] {$1$} (b) 
+	-- node [anchor=north] {$3$} (c) -- node [anchor=north] {$2$} (a);
+\end{scope}
+
+\end{tikzpicture}
+\caption{minimal example}
+\end{figure}
+
+** Every minimum spanning tree
+It is true that every minimum spanning tree of $G$ is a minimum-bottleneck tree
+of $G$. Suppose for the purposes of contradiction that not every minimum
+spanning tree of $G$ is a minimum-bottleneck tree of $G$.
+
+Let us label the minimum spanning tree of $G$, $T$ and the minimum-bottleneck
+tree of $G$, $T'$. Then there is an edge $e$, the most expensive edge in $G$,
+which connects two vertices $u,v$ to a vertex $w$. This edge is not in $T$,
+otherwise it would be a minimum-bottleneck tree. Thus remove the edge $e'$ that
+connects $u,v$ to $w$ in $T$ and replace it with $e$.
+
+But a minimum spanning tree would have had $e$ if it were the only edge that
+connected $u,v$ to $w$, thus there cannot exist an edge $e$ that itself is not
+already in $T$. Thus, we have our contradiction.
+* Your-tube
+** Valid schedule claim
+We consider the following claim:
+/there exists a valid schedule if and only if each stream/ i /satisfies/
+/b_i \leq rt_i/. This claim is _false_. To see why, consider a counter
+example. Suppose we have the same /n/ streams in the example problem, e.g.,
+(b_1, t_1) = (2000, 1), (b_2, t_2)=(6000,2), (b_3, t_3)=(2000,1) but with
+$r = 2999$. Because b_2 > $rt_2$ it cannot be the first stream; however, a
+valid schedule exists. The schedule that runs the streams in the order
+1, 2, 3 is still valid. The restriction, as outlined in the problem only
+holds for time intervals that start at 0.
+** Algorithm
+The algorithm for this problem is fairly straightforward. The only thing
+we need to ensure is that the first stream satisfies our $r$ constraint:
+
+- /Calculate the bitrate ratio for each stream by dividing $b_i$ by $t$/
+- /Sort the streams in non-decreasing order, which is our schedule/
+- /If the first stream satisfies our $r$ constraint, the schedule is valid/,
+  /otherwise, no valid schedule exists/.
+
+* Maximum regions
