@@ -1,0 +1,73 @@
+#+AUTHOR: Ryan Sharif
+#+TITLE: Greedy algorithms continued...
+#+OPTIONS: toc:nil
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LATEX_HEADER: \usepackage{mathtools}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usetikzlibrary{positioning,calc}
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{mathpazo}
+#+LaTeX_HEADER: \linespread{1.05}
+#+LaTeX_HEADER: \usepackage[scaled]{helvet}
+#+LaTeX_HEADER: \usepackage{courier}
+#+LATEX_HEADER: \usepackage{listings}
+#+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
+
+* The Clustering problem
+If we have a set of objects that are connected, e.g., people's webpages,
+transistors in a chip, etc..., we can represent their strength by using
+weights. We can group these objects by distance. The goal is that objects
+in a group should be close to each other.
+
+** K-clustering
+K-clustering has a  number /k/ given to us that  represents the number
+of clusters we want. Looking at  the distance between two clusters can
+be computed by  looking at the distance of the  two closest objects in
+the  different groups.  The goal  during this  lecture is  to get  the
+distances that are  furthest from each other. We want  to maximize the
+minimum  distance, $W_i$.  Clusters that  satisfy this  principle have
+interesting
+
+** Kruskal's approach
+We can use  a modified version of Kruskal's algorithm  to help us with
+this  problem. The  only  thing  we need  to  change  is our  stopping
+criteria; stop when  we have k-clusters. One thing  this approach does
+not do  is try to balance  the graph.  A strong  relationship seems to
+pervade MSTs and cluster problems.
+
+*** Proof of Kruskal's approach
+Kruskal's algorithm will produce clusters: /C_1/, /C_2/, ... /C_k/. We
+will say that $d*$ is the distance between closest clusters. In other
+words, if /k = 2/, /d*/ will be the distance between the closest
+clusters. We want to show that the distance in /d*'/, which is derived
+from /C_1'/, /C_'2/, ..., /C_k'/ and show that it is less than or
+equal to /d*/. So, since there is no argument when /C_1 = C_1'/, /C_2
+= C_2'/, etc., we want to look at the case when there is at least one
+cluster /C_r/ that gets split differently. In other words, there exist
+a /p_i/ and /p_j/ in /C_r/ that is split into /C_s'/ and /C_t'/. The
+closest distance of /d(p_x, p_y)/ \geq /d*'/. Thus, Kruskal's
+algorithm is an optimal solution, since /d*'/ \leq /d*/.
+
+** Making k-clusters from an MST
+You can get the same solution as Kruskal's approach if we start with an
+MST, and remove the maximum edges in the graph until we have k-clusters.
+Use the same proof we used above for proving Kruskal's approach.
+
+* Another problem related to greedy
+There is a problem in encoding. Given objects /a, b, c/ and say we
+want to encode them with 0's and 1's. We know we need at least two
+bits, since we want to minimize data size. Based on some criteria,
+how can we minimize the code so that there is no ambiguity in
+transmission. Given that we know their frequencies, we want a
+way to encode the data, so that there is no ambiguity, and we
+have the minimal value.
+
+** Prefix codes
+The fact that we should be able to accomplish the task above is
+key. A /prefix/ code is a code where no code is a prefix of
+another.
+
+** Tree coding
+Take a binary tree with the number of leaves equal to the number of
+words you want to encode. One branch will be called 0, say the left
+branch. The other branches will follow, as they build by adding 1.
