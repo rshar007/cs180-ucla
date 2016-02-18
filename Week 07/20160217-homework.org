@@ -1,6 +1,10 @@
 #+AUTHOR: Ryan Sharif 204-351-724
 #+TITLE: CS180: Homework 5, Section 1B
 #+OPTIONS: toc:nil
+
+#+LaTeX_HEADER: \usepackage{minted}
+#+LaTeX_HEADER: \usemintedstyle{emacs}
+
 #+LATEX_HEADER: \usepackage{amsthm}
 #+LATEX_HEADER: \usepackage{mathtools}
 #+LATEX_HEADER: \usepackage{tikz}
@@ -14,3 +18,58 @@
 #+LATEX_HEADER: \usepackage{listings}
 #+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
 
+
+* This tree has a minimum
+
+** A little lemma
+Before providing an $O(n \log{n})$ algorithm that solves this problem,
+lets consider a lemma that will help us. Since we have a complete
+binary tree, we either have the case where a parent node is less than
+the value of its two child nodes, or one of its child nodes is less
+than the value of its parent node. We can use a proof by contradiction
+to see why this is so. Suppose for the purpose of contradiction, this
+is not so, that is suppose that a parent $p$ has a value less
+than its two child nodes. Furthermore, suppose that one of the child
+nodes $c_x$ is less than its sister node $c_y$ and its parent node. Then,
+we have $p < c_x$ and $p < c_y$ and $c_x < p$ and $c_x < c_y$. But, this
+is a contradiction, since we cannot have $p < c_x$ and $c_x < p$. With this
+fact now in hand, we can write our algorithm:
+
+** Algorithm
+- /Begin at the root node/
+- /If the root node is smaller than both its children, then/
+  + /return the root node/
+- /Else if, a child node is smaller than its parent, then/
+  + /check this nodes children/
+  + /If both children are larger then return this node/
+  + /Else, return to step 3/
+- /If there are no child nodes, then/
+  + /we have arrived at a leaf, return this node/
+
+** Correctness
+We can use our little lemma above to see why our algorithm will always
+return a local  minimum. Recall that a local minimum  is one such that
+its  label $x_v$  is  less than  the  label $x_w$  for  all nodes  $w$
+connected to a node $v$ by an  edge. Every node in our complete binary
+tree will have a parent node, except for the root node.
+
+Suppose we have arrived at our  /i^{th}/ step in the algorithm. By our
+lemma above, we will either have  a parent whose value is smaller than
+its children,  or a  child node  that is smaller  than its  sister and
+parent node. In the former case,  our algorithm will return the parent
+node, and since  we got to this  node because it was  smaller than its
+parent node, we have a local minimum.  Similarly for a child node $c$,
+if its  children are greater  than $c$, we  return $c$, since  we have
+found a local minimum.
+
+Finally, if we reach a leaf, then  we got there because it was smaller
+than its  parent node.  And  since by definition,  a leaf node  has no
+children it must be smaller than  all nodes it is connected to, namely
+its parent node.
+
+** Runtime
+Our  algorithm   runs  within   the  specification  of   the  problem,
+$O(\log{n})$, since at  every point, we make a decision  to follow the
+binary tree  in one direction,  or return  the current node.  Since we
+never examine more  than one path in the tree,  our algorithm performs
+at most $\log{n}$ probes.
