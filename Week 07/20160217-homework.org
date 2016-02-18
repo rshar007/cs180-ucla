@@ -18,6 +18,8 @@
 #+LATEX_HEADER: \usepackage{listings}
 #+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
 
+* Significant inversions
+
 * Bank fraud
 ** Overview of the problem
 The biggest problem that our bank faces is that it does not have a way
@@ -162,3 +164,33 @@ Using the quadratic formula, we get a  number greater than 13. Thus, if we space
 our drops in increments  starting from 14 and decreasing the  maximum floor by 1
 and returning to our last known good drop  if our first egg breaks, we arrive at
 the maximum number of drops for any $n$, such that $1 \leq n \leq 100$ is 14.
+
+* Local minimum on a chess board
+Although this problem deals with a chess board, we can convert it
+into a problem where we want to corral a local minimum. That is we
+want to search the easiest place first, the place that takes the
+least amount of work and divide and conquer after that. We know
+that if there is a local minimum on the outside edge of our graph,
+we will perform fewer probes, since every outer node is connected
+to a maximum of three other nodes, the corner nodes only connect
+to two other nodes.
+
+Thus, we perform a search for the local minimum on the outside
+edge of our graph G, which takes $O(n)$ probes. If our local minimum,
+is there, we're done. Else, a local minimum is foud on the inside,
+of the graph. We can demarcate another edge to find a local minimum,
+by searching the middle horizontal row of our graph G. This, search
+again, can accomplished in $O(n)$ probes, and if our local minimum
+is there, we are done.
+
+Finally, if a local minimum is not in our `fence', then one must
+reside in one of our `fence' quarters. Perform a search for a 
+local minimum in an arbitrarily chosen fence. Since, our local 
+minimum was not found on the `fence', i.e., since $v \notin F$,
+there must exist one inside the quarter. Suppose, not, that is
+suppose there is no local minimum inside the quarter. Then,
+that means for every node $w \in Q$, that is our quarter, there
+is a smaller $v \in F$, but we just said $v \in F$, thus, we 
+have a contradiction. Searching a quarter of our graph, also
+takes $O(n)$ time. Thus, the maximum number of probes is
+$O(3n)$ or $O(n)$.
