@@ -117,3 +117,48 @@ $O(\log{n})$, since at  every point, we make a decision  to follow the
 binary tree  in one direction,  or return  the current node.  Since we
 never examine more  than one path in the tree,  our algorithm performs
 at most $\log{n}$ probes.
+
+* Two eggs
+We now  turn to  our problem  of dropping two  eggs from  a building.   From the
+outset, we can consider what we would do if we only had one egg. The only way to
+ensure a reliable measure  for the egg would be to drop it  from each floor, one
+by one starting from the first floor.  With two eggs, we could improve our speed
+by climbing  floors in multiples of  two, retreating to the  previous floor when
+our first egg broke  to determine if the maximum height  was the previous floor,
+and not two floors below.
+
+We can do better than this simple multiplier by trying several other
+multipliers. In each case, we will find floors where the multiplier
+achieves fewer steps than others but performs worse on other floors:
+
+| floor | 2x | 5x | 10x | 20x | 25x |
+|-------+----+----+-----+-----+-----|
+|     8 |  5 |  5 |   9 |   9 |   9 |
+|    23 | 13 |  8 |   6 |   5 |  24 |
+|    47 | 25 | 12 |  12 |   9 |  22 |
+|    71 | 37 | 16 |   9 |  15 |  24 |
+|    89 | 46 | 22 |  18 |  14 |  18 |
+
+Thus, it appears that  there is no optimal solution, if  we arbitratily assign a
+multiplier. What  we'd like to  do is  set a maximum  number of drops  no matter
+where any egg should break between the first floor and the last floor. We can
+achieve such an even spacing by noting that everytime we drop our first egg
+we are using up our maximum number of drops, decreasing it by one. We can
+express this decrease in available drops using the equation: 
+$n + (n - 1) + (n - 2) + ... \leq 100$. This looks like the formula for
+obtaining the sum of the first $n$ integers: $\frac{n(n + 1)}{2}$, which we
+can solve:
+
+#+BEGIN_LaTeX
+\begin{align}
+  \frac{n(n + 1)}{2} &= 100 \\
+  n(n + 1) &= 200 \\
+  n^2 + n &= 200 \\
+  n^2 + n - 200 &= 0
+\end{align}
+#+END_LaTeX
+
+Using the quadratic formula, we get a  number greater than 13. Thus, if we space
+our drops in increments  starting from 14 and decreasing the  maximum floor by 1
+and returning to our last known good drop  if our first egg breaks, we arrive at
+the maximum number of drops for any $n$, such that $1 \leq n \leq 100$ is 14.
