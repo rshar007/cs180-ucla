@@ -1,0 +1,73 @@
+#+AUTHOR: Ryan Sharif
+#+TITLE: Dynamic programming
+#+OPTIONS: toc:nil
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LATEX_HEADER: \usepackage{mathtools}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usetikzlibrary{positioning,calc}
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{mathpazo}
+#+LaTeX_HEADER: \linespread{1.05}
+#+LaTeX_HEADER: \usepackage[scaled]{helvet}
+#+LaTeX_HEADER: \usepackage{courier}
+#+LATEX_HEADER: \usepackage{listings}
+#+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
+
+* Dynamic programming strategy
+We typically divide a problem up into several groups that probably
+overlap and try to find a solution that optimizes our strategy.
+
+* Interval scheduling with dynamic programming
+We assign a weight to each interval. We want to find the maximal
+weighted intervals that do not overlap. A greedy algorithm doesn't
+work with this problem. Consider, then, an arbitrary interval and we
+want to consider if it is in the solution or not. There are two
+possibilites, either it is in the solution or it is not. We must do a
+_complete case analysis_.  We consider both of these solutions, then
+an optimal solution will either contain this interval, or it will not.
+Then, if this interval is in the optimal solution, we must consider
+that the optimal solution goes up to the end of this interval, or it
+goes up to just before the end of this interval.
+
+Then we have the following equations: either $opt(0, r_x) = max$ of
+$opt(0,r_x - 1)$ or $opt(o, l_x - 1) + w_x$. We use 1 simply because
+we assumed we have integer intervals, otherwise we could use any
+epsilon. We calculate the schedule using the above equation until we
+get to our interval $x$. We repeat this for evert interval in our
+problem. Since we assume that we have a sorted list, we accept that
+the algorithm has preprocessing that is $O(n \log{n})$, the operation
+of our loop is $O(n)$, linear.
+
+* Knapsack problem
+** Problem outline
+Suppose we have a bunch of items, each has a size and value, $s_i, v_i$.
+We have a knapsack $S$. We want to maximize the number of items in the
+knapsack. There are two variations of this problem, fractional and
+discrete knapsack. The fractional problem, is simple, we just
+sort the ratio of stuff and value and fill our knapsack with stuff
+with the highest ratio.
+
+** Greedy algorithm
+For our greedy algorithm, we'll create a table, with columns that
+expresses the size of the knapsack. We number the columns starting
+from 1, 2, ... to the size of the knapsack. The rows show the
+number of items in the knapsack:
+
+| 1             | 2 | 3 | ... | S                |
+|---------------+---+---+-----+------------------|
+| I_1           |   |   |     |                  |
+|---------------+---+---+-----+------------------|
+| I_1, I_2      |   |   |     |                  |
+|---------------+---+---+-----+------------------|
+| I_1, I_2, I_3 |   |   |     | Optimal solution |
+
+Again, we consider whether an item, such as $I_2$, is in the solution,
+or it is not in the solution. Then we have $S - S_2$. Then, we have
+the following to numbers to compute: 
+$max((opt(i, j - 1)),(opt(i-S_j,j) + v_j))$. We can perform this
+calculation in row major order. The runtime of this algorithm is
+$O(nS)$. This is a psuedo-polynomial time algorith, since $S$ is
+independent of $n$.
+* 
+We are given a collection of integers, e.g., 2, 4, 9, 1, 6, 3. We want
+to know if there is a subset of these integers that add up to a sum $S$.
