@@ -18,6 +18,50 @@
 #+LATEX_HEADER: \usepackage{listings}
 #+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
 
+* Bank fraud
+** Overview of the problem
+The biggest problem that our bank faces is that it does not have a way
+of recording the  account numbers read from  our advanced `equivalence
+tester',  i.e., it  only  looks at  two cards  and  reports /true/  or
+/false/. We can still find out whether there is a set of cards greater
+than $\frac{n}{2}$ that are equivalent.
+
+We begin  by stating that if  there is an equivalence  majority in the
+set, and if we  pair up every card in the set, at  least one pair must
+have two such equivalent cards. We can use a proof by contradiction to
+show why this is so. Suppose that  we have paired each card in the set
+but there is not  a set with two equivalent cards  $x_1, x_2$, then if
+there were  an equivalence  set of  cards, there  would be  a matching
+non-equivalence card for each equivalence  card, since we assumed that
+no pair had such an equivalence.
+
+Then  there  are  no  more  than $\frac{n}{2}$  cards  that  share  an
+equivalence relation, since we have matched each card with one that is
+non-equivalent. But our bank wants to  know if such an equivalence set
+exists, and  since there  are no  more than  $\frac{n}{2}$ equivalence
+cards, we  have a contradiction,  since we said  we are looking  at an
+equivalence   majority,  where   such  as   class  has   greater  than
+$\frac{n}{2}$, but we don't have at least $\frac{n}{2}$ cards.
+
+** Algorithm
+Given the facts above, we only need to find such pairs of equivalent
+cards.
+
+- /pair up every card in our set/
+- /check each pair of cards for equivalence/
+- /if neither card is equivalent, throw both cards in a GOOD pile/
+- /if both cards are equivalent, throw one in a BAD pile, discard the other/
+- /repeat step 2 on our BAD pile/
+- /if one card remains we have such a BAD equivalence class/
+- /check each card in our entire set with the BAD card/
+- /if we have/ $\frac{n}{2}$ /bad cards, we have found the fraud/
+- /else, there was no such fraud/
+
+** Runtime
+We will perform $\frac{n}{2}$, initial comparisons to derive a bad pile.
+We will perform a maximum of $\log{n}$ comparisons on our bad pile.
+Finally, we will perform a final test on $(n - 1)$ cards. Thus, we have
+$O(\frac{n}{2} + \log{n} + (n - 1))$ or $O(n)$.
 
 * This tree has a minimum
 

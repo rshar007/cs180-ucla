@@ -3,3 +3,7 @@
 *.pdf
 *.tex
 *.DS_Store
+*.aux
+*.log
+*.out
+_minted*
