@@ -1,0 +1,39 @@
+#+AUTHOR: Ryan Sharif
+#+TITLE: Dynamic programming continued
+#+OPTIONS: toc:nil
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LATEX_HEADER: \usepackage{mathtools}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usetikzlibrary{positioning,calc}
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{mathpazo}
+#+LaTeX_HEADER: \linespread{1.05}
+#+LaTeX_HEADER: \usepackage[scaled]{helvet}
+#+LaTeX_HEADER: \usepackage{courier}
+#+LATEX_HEADER: \usepackage{listings}
+#+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
+
+* Two sequences
+
+Suppose you are given two sequences: <a,b,a,c,a,b,d>,
+<b,c,a,a,d>. Further, suppose you want to know how similar they are.
+This problem is found in word processors, dna sequences, etc... 
+One way of defining how similar they are is to compare their
+orderings. Our goal in this problem is to maximize the number of
+matches. We denote the solution as $opt(m, n)$. We want to consider
+a subproblem, $opt(i, j)$. While considering the optimal solution
+of $i$ and $j$, we can ignore the rest of the problem. We know,
+that $X \in S_1$ is either equal to $Y \in S_2$ or it is not.
+Then, $opt(i, j) = opt(i - 1, j - 1, ) + 1$ if $X$ and $Y$ match.
+If they don't match, then either $X$ matches something before, $Y$
+matches something before, or neither matches anything before. Thus,
+we also have $opt(i - 1, j)$, $opt(i, j - 1)$, $opt(i - 1, j - 1)$.
+We take the maximum of these three. The inner body of this loop
+takes linear time, $m \cdot n$:
+
+|   | a | b | a | c |
+|---+---+---+---+---|
+| b | 0 | 1 | 1 | 1 |
+|---+---+---+---+---|
+| c | 0 | 1 | 1 | 2 |
+
