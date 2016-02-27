@@ -1,0 +1,40 @@
+#+AUTHOR: Ryan Sharif
+#+TITLE: 
+#+OPTIONS: toc:nil
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LATEX_HEADER: \usepackage{mathtools}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usetikzlibrary{positioning,calc}
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{mathpazo}
+#+LaTeX_HEADER: \linespread{1.05}
+#+LaTeX_HEADER: \usepackage[scaled]{helvet}
+#+LaTeX_HEADER: \usepackage{courier}
+#+LATEX_HEADER: \usepackage{listings}
+#+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
+
+* Sections to read for the final
+The professor has informed us to read the most probable sections in
+the final:
+4.7, 4.8, 5.1, 5.3, 5.4, 6.1, 6.2, 6.4, 6.5, 6.6, 6.8, 7.1, 7.2, 7.3,
+7.5, 8.1, 8.4
+
+* Shortest path from $s$ to $v$ with negative edges
+Taking a  dynamic programming approach,  we can tackle the  problem of
+shortest  path from  $s$ to  $v$. We  begin by  focusing on  a generic
+problem, where we  worry about the length of a  path, building shorter
+paths to longer paths.  We denote  this equation as follows: $sp^i (s,
+v)$.   Furthermore, we  know that  any path  from $s$  to $v$  must go
+through one of the neighbors of  $v$, i.e., $sp^{i - 1}(s,v_2)$, which
+means our new equation is: $min(sp(s,  j) + w_{v_j, v})$. This assumes
+that for $1 \leq i \leq n - 1, \forall v \in V$. The running time of
+this algorithm is $O(n^3)$. 
+
+* DNA RNA folding problem
+We are given a sequnce of base pairs, <A,U,G,C,...>, and asked
+to determine a folding. A folding matches a C with a G, and an
+A with a U, and we are not allowed to do a crossing. Thus, we 
+want to find a natural non-crossed matching, without any sharp
+corners. A dynamic programming approach considers an interval
+from $i$ to $j$. We can express this as subproblems:
+$opt(i,j) = opt(i, k - 1) + opt(k, j) + 1$. 
