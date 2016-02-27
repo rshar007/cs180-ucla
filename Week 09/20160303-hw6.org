@@ -1,0 +1,73 @@
+#+AUTHOR: Ryan Sharif 204-351-724
+#+TITLE: CS180: Homework 6, Section 1B
+#+OPTIONS: toc:nil
+
+#+LaTeX_HEADER: \usepackage{minted}
+#+LaTeX_HEADER: \usemintedstyle{emacs}
+
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LATEX_HEADER: \usepackage{mathtools}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usepackage{tkz-graph}
+#+LATEX_HEADER: \usetikzlibrary{positioning,calc}
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{mathpazo}
+#+LaTeX_HEADER: \linespread{1.05}
+#+LaTeX_HEADER: \usepackage[scaled]{helvet}
+#+LaTeX_HEADER: \usepackage{courier}
+#+LATEX_HEADER: \usepackage{listings}
+#+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
+
+* Maximum length of a DAG
+
+** (a) Counter example
+The algorithm is incorrect because it does not always return
+the maximum length of a DAG. The algorithm returns 1 for the graph,
+as shown in figure 1; but the correct answer is 2.
+A correct algorithm should consider the length 2 based on the pairs
+$(v_1, v_3), (v_3, v_4)$.
+
+\begin{figure}
+\centering
+\begin{tikzpicture}
+\tikzstyle{every node}=[circle, draw]
+\node (v1) {v1};
+\node (v2) [right of = v1] {v2};
+\node (v3) [right of = v2] {v3};
+\node (v4) [right of = v3] {v4};
+
+\draw [->] (v1) -- (v2);
+\draw [->] (v3) -- (v4);
+\draw [->] (v1) to [out=45] (v3);
+
+\end{tikzpicture}
+\caption{counter example, maximum length is 2}
+\end{figure}
+
+** (b) Correct and efficient algorithm
+
+*** Sketch of the algorithm
+Since this chapter has focused on dynamic programming algorithms,
+we should assume that we can achieve a correct and efficient
+algorithm using a dynamic programming algorithm. Given that we
+know that we must start at vertex $v_1$ and end at vertex $v_n$,
+we have a starting point: we can either start looking for paths
+from the beginning at $v_1$ or trace a path backwards, starting
+at $v_n$. Thus, starting at node $v_n$, we can do a complete
+case analysis: either a node $v_i$ contributes to the maximum
+length, or it does not, i.e., starting from $v_1$, we go through
+$v_i$ to get to $v_n$ or we do not get to $v_n$ through $v_i$. 
+
+We can use this fact to show that we really want to solve a
+subproblem. We want an algorithm that will compute the maximum
+path up to the current node: /max of / $opt()$
+
+*** Algorithm
+- /Initialize an $(n \times n)$ array/
+- /For all entries where there is no edge from $v_i$ to $v_j$ insert/
+  /the value $-\infty$./
+
+*** Runtime
+Filling in the array in row major order will take $O(n \times n)$ or
+$O(n^2)$ operations, since minimally we need to look at each entry
+in the array at least once. 
