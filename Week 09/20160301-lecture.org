@@ -1,0 +1,38 @@
+#+AUTHOR: Ryan Sharif
+#+TITLE: Network flow
+#+OPTIONS: toc:nil
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LATEX_HEADER: \usepackage{mathtools}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usetikzlibrary{positioning,calc}
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{mathpazo}
+#+LaTeX_HEADER: \linespread{1.05}
+#+LaTeX_HEADER: \usepackage[scaled]{helvet}
+#+LaTeX_HEADER: \usepackage{courier}
+#+LATEX_HEADER: \usepackage{listings}
+#+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
+
+* An s-t network
+We start by giving a definition of a network. A network is a weighted
+directed graph. Every vertex must obey the rule of conservation, that
+is it can only send as much as it receives, i.e., $\sum_v f \text{in}
+= \sum_v f \text{out}$. We begin by finding any path from s to t using
+breadth-first-search and send the minimal amount of flow; the minimal
+amount is determined by the minimal edge on that path. This solves 
+a generic flow problem. We now look at the /max flow/ problem.
+
+** Max flow problem
+Whenever we don't explicity state the weight of an edge, the edge
+weight is 1. We add an artifical path for each edge in the opposite
+direction, in case we change our mind during the execution of our
+algorithm for how much flow we want to send. The algorithm
+
+To prove the correctness of this algorithm we need to use the minimal
+cut theorem, $f_{\text{max}} \leq \text{min cut}$. Then given some max
+flow $f$, a residual graph $G_f$ has no path $s-t$, and the value of
+$f = c(s,t)$ for some cut $(s, t)$ are all equivalent statements. So,
+if we assume $f$ is a max flow, the residual graph $G_f$ has no path
+$s-t$. Suppose not, that is suppose $G_f$ has a path $s-t$ but then
+there is a path that was not maximum, which is a contradiction since
+we already assumed that $f$ is a max flow. 
