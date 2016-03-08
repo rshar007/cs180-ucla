@@ -1,0 +1,66 @@
+#+AUTHOR: Ryan Sharif
+#+TITLE: Network flow continued
+
+#+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LATEX_HEADER: \usepackage{mathtools}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usetikzlibrary{positioning,calc}
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{mathpazo}
+#+LaTeX_HEADER: \linespread{1.05}
+#+LaTeX_HEADER: \usepackage[scaled]{helvet}
+#+LaTeX_HEADER: \usepackage{courier}
+#+LATEX_HEADER: \usepackage{listings}
+#+OPTIONS: toc:nil
+
+* Sections for the final
+The professor has listed several sections from the book that may be
+on the final: 4.7, 4.8, 5.1, 5.3, 5.4, 6.1, 6.2, 6.4, 6.5, 6.6, 6.8,
+7.1, 7.2, 7.3, 7.5, 7.8, 7.9, 8.1, 8.4
+
+* Returning to max flow, a proof
+** Proof statments
+We considered three statements about network flow last time:
+
+1. $f$ is max flow
+2. residual graph has no augmented path
+3. $|f| = C(s,t)$ for some /st-cut/
+
+** From statement 2 to 3
+We consider statement 2, starting from  $s$. We remove edges that have
+been saturate, i.e.,  no more flow is possible.  This procedure splits
+the  graph into  several  components.  We then  look  at all  vertices
+reachable  from $s$,  i.e., there  is  a path  from $s$  to $v$.  This
+separation  is a  cut,  where the  edges that  have  been removed  are
+saturated. The  flow of these  edges are equal to  capacity, otherwise
+they would  not be reachable.  The cut in statement  3 is this  cut we
+have just been considering.
+
+** From statement 3 to 1
+Going from statement  3 to statement 1,  that is the value  of flow is
+equal to the capacity of some cut.  Any flow that we find in the graph
+must be less than or equal to the capacity of any cut, i.e., $|f| \leq
+\text{cap(cut)}$. Therefore,  flow must be  less than or equal  to the
+capacity of the smallest cut, this must be the max flow.
+
+* NP-completeness
+
+** Traveling salesman
+A traveling salesman starts at some location s and wants to visit every
+vertex in a graph only once, what is his shortest path. 
+
+** Satisfiability
+You are given a boolean equation and you want figure out how to make
+a clause to be equal to 1. There are 2^{n} possibilities. 
+
+** Cliques in a graph
+Given a graph /G/, a clique in a graph is a subset of vertices such
+that they form a complete graph. Finding the max clique, i.e., the
+one with the maximum number of vertices, is also /NP-complete/.
+
+** Relationship between these problems
+For all three of these problems, there were two possible answers, come
+up with a polynomial algorithm or show that there is no polynomial
+algorithm to solve these problems, i.e., either $P = NP$ or 
+$P \neq NP$.
