@@ -1,0 +1,50 @@
+#+AUTHOR: Ryan Sharif
+#+TITLE: Maximum flow network continued...
+#+LaTeX_HEADER: \usepackage{minted}
+#+LaTeX_HEADER: \usemintedstyle{emacs}
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LATEX_HEADER: \usepackage{mathtools}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{mathpazo}
+#+LaTeX_HEADER: \linespread{1.05}
+#+LaTeX_HEADER: \usepackage[scaled]{helvet}
+#+LaTeX_HEADER: \usepackage{courier}
+#+LATEX_HEADER: \usepackage{listings}
+#+LATEX_HEADER: \usetikzlibrary{positioning,calc}
+#+OPTIONS: toc:nil
+
+* General steps of the Ford-Fulkerson algorithm
+
+  1. Find an $s-t$ direct path and use the minimum capacity of the path
+     as flow
+  2. Build a residual graph for every edge that has flow, i.e.,
+     if $e = (u, v), f(e)$ then build a backward edge $(v,u)$ and set the
+     same flow, $f(e)$.
+  3. Modify the edge $c'_e = c_e - f(e)$
+  4. Repeat the algorithm until no more paths are available.
+
+* Bipartite matching problem
+
+  We can define a bipartite graph: $G = (V, E)$ is an undirected graph
+  if and only if it can be partitioned into groups $X, Y$ so that 
+  $X \cup Y = V$, and each edge $e \in E$ has one end in $X$ and one
+  end in $Y$.
+  
+  A matching $M$ is a set of edge $M \subset E$ so that each node
+  appears in only one edge.
+  
+  The problem in a bipartite matching problem is to find the largest
+  matching set in $G$.
+  
+  We can use the Ford-Fulkerson algorithm to solve the bipartite
+  matching problem:
+  
+  1. Build $G'$ as follows:
+     1. add edges $(s,x)$ for all $x \in X$
+     2. add edges $(y, t)$ for all $y \ in Y$
+     3. assign capacity 1 to all edges
+     4. run the maximum flow algorithm on $G'$
+  2. The size of the maximum matching in G' is
+     equal to the maximum flow in $G$.
+
