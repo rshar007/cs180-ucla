@@ -1,0 +1,28 @@
+#+AUTHOR: Ryan Sharif
+#+TITLE: NP 
+#+LaTeX_CLASS_OPTIONS: [letter,twoside,twocolumn]
+#+LATEX_HEADER: \usepackage{amsthm}
+#+LATEX_HEADER: \usepackage{mathtools}
+#+LATEX_HEADER: \usepackage{tikz}
+#+LATEX_HEADER: \usetikzlibrary{positioning,calc}
+#+LaTeX_HEADER: \usepackage[T1]{fontenc}
+#+LaTeX_HEADER: \usepackage{mathpazo}
+#+LaTeX_HEADER: \linespread{1.05}
+#+LaTeX_HEADER: \usepackage[scaled]{helvet}
+#+LaTeX_HEADER: \usepackage{courier}
+#+LATEX_HEADER: \usepackage{listings}
+#+OPTIONS: toc:nil
+
+* Element uniqueness
+** Algorithmic transformation
+Consider a problem A,  and a set of integers \{ 2, 4,  9, 2, 3, 18 \};
+is every element in  the set unique? One way to  solve this problem is
+to sort the  numbers and check if  the sorted list. The  book uses the
+notation A  \leq B  to show  that a  problem A  is transformed  into a
+problem B. Formally, we say that a  problem A \leq_{p} B can be solved
+in polynomial time if B can be  solved in polynomial time. If A cannot
+be solved  in polynomial time, then  B cannot be solved  in polynomial
+time.
+* Clique problem revisited
+A clique is a subset of vertices such that every vertex is connected
+to each other. 
